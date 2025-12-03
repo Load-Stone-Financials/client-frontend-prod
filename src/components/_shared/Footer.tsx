@@ -6,7 +6,7 @@ import Twitter from "../../assets/icon/twitter.png";
 import Facebook from "../../assets/icon/facebook.png";
 export default function Footer() {
   return (
-    <footer className="w-screen lg:h-[797px text-white bottom-0 left-0">
+    <footer className="lg:h-[797px text-white bottom-0 left-0">
       {/* Newsletter Section */}
       <div className="bg-brand-purple-light  w-full lg:h-[248px] py-10 px-4 text-white text-center">
         <div className="lg:h-[200px} max-w-[1250px] mx-auto pt-37px">
