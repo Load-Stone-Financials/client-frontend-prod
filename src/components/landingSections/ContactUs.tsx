@@ -8,7 +8,7 @@ export default function ContactUs() {
   return (
     <LandingLayout>
 
-      <section className="font-montserrat w-screen text-xl ">
+      <section className="font-montserrat w-full text-xl">
 
 
         {/* ================= HERO SECTION ================= */}

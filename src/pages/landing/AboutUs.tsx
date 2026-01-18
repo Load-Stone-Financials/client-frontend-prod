@@ -9,7 +9,7 @@ export default function AboutUs() {
         name="description"
         content="Learn more about Loadstone Financial, our mission, and how we support SMEs across Africa."
       />
-      <section className="font-montserrat w-screen text-xl flex justify-center items-center">
+      <section className="font-montserrat w-full text-xl flex justify-center items-center">
         <div className="w-full bg-white">
           {/* ================= HERO SECTION ================= */}
           <section
