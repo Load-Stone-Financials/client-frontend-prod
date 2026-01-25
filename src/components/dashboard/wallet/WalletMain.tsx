@@ -4,10 +4,20 @@ import { mdiWallet } from "@mdi/js";
 import BillPayment from "./BillPayment";
 import Card from "./Card";
 import SearchInput from "@/components/_shared/SearchInput";
-
+import WalletDetailsModal from "@/components/ui/modal/wallet/WalletDetailsModal";
 import WalletTable from "./WalletTable";
+import { useState } from "react";
+import Modal from "@/components/ui/modal/Modal";
 
 export default function WalletMain() {
+  const [isWalletDetailsModalOpen, setIsWalletDetailsModalOpen] = useState(false);
+
+  const openWalletDetailsModal = () => {
+    setIsWalletDetailsModalOpen(true);
+  };
+
+
+
   return (
     <>
       <div className="bg-white shadow-2xl">
@@ -23,7 +33,11 @@ export default function WalletMain() {
               icon={mdiWallet}
               value="₦5,000,000.00"
               action={
-                <Button content="Wallet Details" classes="primary-btn btn-md" />
+                <Button
+                  content="Wallet Details"
+                  classes="primary-btn btn-md"
+                  onClick={openWalletDetailsModal}
+                />
               }
               variant="one"
             />
@@ -32,12 +46,22 @@ export default function WalletMain() {
             <Card />
             <BillPayment />
           </div>
-        </div>{" "}
+        </div>
         <div className="px-4 sm:px-6 py-4">
+          {" "}
           <SearchInput />
         </div>
       </div>{" "}
       <WalletTable />
+      <Modal
+        isOpen={isWalletDetailsModalOpen}
+        onClose={() => setIsWalletDetailsModalOpen(false)}
+        // title="Wallet Details"
+        maxWidth="md"
+        useBackgroundImage={false}
+      >
+        <WalletDetailsModal />
+      </Modal>
     </>
   );
 }

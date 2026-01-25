@@ -15,6 +15,10 @@ type FormFieldOTPProps<T extends FieldValues> = {
   name: Path<T>
   label: string
   length?: number
+  inputType?: "text" | "tel" | "password"
+  className?: string
+  containerStyle?: string
+  placeholder?: string
 }
 
 export function FormFieldOTP<T extends FieldValues>({
@@ -22,30 +26,40 @@ export function FormFieldOTP<T extends FieldValues>({
   name,
   label,
   length = 6,
+  inputType = "tel",
+  className,
+  containerStyle,
+  placeholder,
 }: FormFieldOTPProps<T>) {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
+        <FormItem className={className}>
+          <FormLabel className="text-center text-sm font-medium text-gray-700 mb-4 block">
+            {label}
+          </FormLabel>
 
           <FormControl>
-            <OtpInput
-              value={field.value || ""}
-              onChange={field.onChange}
-              numInputs={length}
-              inputType="tel"
-              shouldAutoFocus
-              renderInput={(props) => (
-                <input
-                  {...props}
-                  className="h-12 w-12 rounded-md border text-center focus:border-brand-purple focus:outline-none"
-                />
-              )}
-              containerStyle="flex gap-2"
-            />
+            <div className="flex justify-center">
+              <OtpInput
+                value={field.value || ""}
+                onChange={field.onChange}
+                numInputs={length}
+                inputType={inputType}
+                shouldAutoFocus
+                renderInput={(props) => (
+                  <input
+                    {...props}
+                    type={inputType}
+                    placeholder={placeholder || "*"}
+                    className="w-10! h-10 rounded-md border border-purple-200 text-center text-2xl font-semibold focus:outline-none focus:ring-2 focus:ring-brand-purple bg-white text-gray-900 focus:border-transparent transition"
+                  />
+                )}
+                containerStyle={containerStyle || "flex justify-center gap-4"}
+              />
+            </div>
           </FormControl>
 
           <FormMessage name={name} />

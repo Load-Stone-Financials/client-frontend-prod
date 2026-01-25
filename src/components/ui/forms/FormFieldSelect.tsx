@@ -39,14 +39,14 @@ export function FormFieldSelect<T extends FieldValues>({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel className="text-gray-700 text-start">{label}</FormLabel>
           <Select onValueChange={field.onChange} value={field.value}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
-            <SelectContent className="z-[9999]">
+            <SelectContent className="z-9999 text-gray-700">
               {options.map((option) => (
                 <SelectItem key={option.value} value={option.value} className={className}>
                   {option.label}

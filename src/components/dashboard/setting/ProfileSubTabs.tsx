@@ -13,7 +13,7 @@ export default function ProfileSubTabs({ activeTab, onTabChange }: ProfileSubTab
   ];
 
   return (
-    <div className="flex gap-8 border-b border-gray-200 mb-6">
+    <div className="flex justify-center items-center gap-8 border-b border-gray-200 mb-6">
       {tabs.map((tab) => (
         <button
           key={tab.id}

@@ -1,9 +1,9 @@
 
 import Icon from "@mdi/react";
 import { mdiAlertCircleOutline } from "@mdi/js";
-import type { Guarantor } from "@/features/guarantorColumns";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/modal/Modal";
+import type { Guarantor } from "@/types/guarantor";
 
 interface DeleteGuarantorModalProps {
   isOpen: boolean;

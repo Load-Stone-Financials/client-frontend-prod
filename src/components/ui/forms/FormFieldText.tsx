@@ -15,7 +15,7 @@ type FormFieldTextProps<T extends FieldValues> = {
   name: Path<T>;
   label: string;
   placeholder?: string;
-  type?: "text" | "email" | "password" ;
+  type?: "text" | "email" | "password" | "date";
   className?: string;
   required?: boolean | string;
 };
@@ -40,8 +40,8 @@ export function FormFieldText<T extends FieldValues>({
             : required || false,
       }}
       render={({ field }) => (
-        <FormItem className={`${className} text-start text-brand-white `}>
-          <FormLabel >{label}</FormLabel>
+        <FormItem className={`${className} text-start text-gray-700 `}>
+          <FormLabel className="text-start">{label}</FormLabel>
 
           <FormControl>
             <Input type={type} placeholder={placeholder} {...field} />

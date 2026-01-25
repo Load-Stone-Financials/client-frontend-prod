@@ -1,45 +1,43 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
+import EditableField from "@/components/ui/EditableField";
+import { Form } from "@/components/ui/form";
 
-interface FieldData {
-  label: string;
-  key: string;
-  value: string;
-  type?: string;
+interface PersonalInfoFormData {
+  title: string;
+  fullName: string;
+  email: string;
+  position: string;
+  share: string;
+  dateOfBirth: string;
+  gender: string;
+  bvn: string;
+  identificationType: string;
+  identificationNumber: string;
+  address: string;
+  lga: string;
+  state: string;
+  country: string;
+  residentialStatus: string;
+  maritalStatus: string;
+  yearMovedToAddress: string;
+  educationalLevel: string;
 }
 
-interface FieldItemProps {
+interface FieldConfig {
   label: string;
-  value: string;
-  type?: string;
-  readOnly?: boolean;
-  onChange?: (value: string) => void;
-}
-
-function FieldItem({ label, value, type = "text", readOnly = false, onChange }: FieldItemProps) {
-  return (
-    <div className="bg-gray-50 p-4 rounded-lg">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
-        {label}
-      </label>
-      <input
-        type={type}
-        value={value}
-        onChange={(e) => onChange?.(e.target.value)}
-        readOnly={readOnly}
-        className={`w-full px-3 py-2 border rounded-md focus:outline-none ${
-          readOnly 
-            ? "bg-gray-100 border-gray-200 cursor-not-allowed text-gray-600" 
-            : "bg-white border-gray-300 focus:ring-2 focus:ring-brand-purple"
-        }`}
-      />
-    </div>
-  );
+  key: keyof PersonalInfoFormData;
+  type?: "text" | "email" | "date";
+  fieldType?: "text" | "select";
+  selectOptions?: { value: string; label: string }[];
 }
 
 export default function PersonalInfoForm() {
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
+
+  const originalData: PersonalInfoFormData = {
     title: "Mr",
     fullName: "Zion Imago-Dei",
     email: "zion@example.com",
@@ -54,78 +52,168 @@ export default function PersonalInfoForm() {
     lga: "Ikeja",
     state: "Lagos",
     country: "Nigeria",
-  });
-
-  const fields: FieldData[] = [
-    { label: "Title", key: "title", value: formData.title },
-    { label: "Full name", key: "fullName", value: formData.fullName },
-    { label: "Email Address", key: "email", value: formData.email, type: "email" },
-    { label: "Position in company", key: "position", value: formData.position },
-    { label: "Share in the company", key: "share", value: formData.share },
-    { label: "Date of birth", key: "dateOfBirth", value: formData.dateOfBirth },
-    { label: "Gender", key: "gender", value: formData.gender },
-    { label: "BVN", key: "bvn", value: formData.bvn },
-    { label: "Identification type", key: "identificationType", value: formData.identificationType },
-    { label: "identification number", key: "identificationNumber", value: formData.identificationNumber },
-    { label: "Address", key: "address", value: formData.address },
-    { label: "LGA", key: "lga", value: formData.lga },
-    { label: "State", key: "state", value: formData.state },
-    { label: "Country", key: "country", value: formData.country },
-  ];
-
-  const handleFieldChange = (key: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [key]: value }));
+    residentialStatus: "Tenant",
+    maritalStatus: "single",
+    yearMovedToAddress: "2020",
+    educationalLevel: "B.sc",
   };
 
-  const handleSave = () => {
+  const form = useForm<PersonalInfoFormData>({
+    defaultValues: originalData,
+  });
+
+  const { control, watch, reset, handleSubmit } = form;
+  const formData = watch();
+
+  const fields: FieldConfig[] = [
+    {
+      label: "Title",
+      key: "title",
+      fieldType: "select",
+      selectOptions: [
+        { value: "Mr", label: "Mr" },
+        { value: "Mrs", label: "Mrs" },
+        { value: "Miss", label: "Miss" },
+        { value: "Dr", label: "Dr" },
+        { value: "Prof", label: "Prof" },
+      ],
+    },
+    { label: "Full name", key: "fullName", type: "text" },
+    { label: "Email Address", key: "email", type: "email" },
+    { label: "Position in company", key: "position", type: "text" },
+    { label: "Share in the company", key: "share", type: "text" },
+    { label: "Date of birth", key: "dateOfBirth", type: "date" },
+    {
+      label: "Gender",
+      key: "gender",
+      fieldType: "select",
+      selectOptions: [
+        { value: "Male", label: "Male" },
+        { value: "Female", label: "Female" },
+        { value: "Other", label: "Other" },
+      ],
+    },
+    { label: "BVN", key: "bvn", type: "text" },
+    {
+      label: "Identification type",
+      key: "identificationType",
+      fieldType: "select",
+      selectOptions: [
+        { value: "NIN", label: "NIN" },
+        { value: "Driver's License", label: "Driver's License" },
+        { value: "International Passport", label: "International Passport" },
+        { value: "Voter's Card", label: "Voter's Card" },
+      ],
+    },
+    { label: "identification number", key: "identificationNumber", type: "text" },
+    { label: "Address", key: "address", type: "text" },
+    { label: "LGA", key: "lga", type: "text" },
+    { label: "State", key: "state", type: "text" },
+    { label: "Country", key: "country", type: "text" },
+    {
+      label: "Residential status",
+      key: "residentialStatus",
+      fieldType: "select",
+      selectOptions: [
+        { value: "Tenant", label: "Tenant" },
+        { value: "Owner", label: "Owner" },
+        { value: "Living with Family", label: "Living with Family" },
+      ],
+    },
+    {
+      label: "Marital status",
+      key: "maritalStatus",
+      fieldType: "select",
+      selectOptions: [
+        { value: "single", label: "Single" },
+        { value: "married", label: "Married" },
+        { value: "divorced", label: "Divorced" },
+        { value: "widowed", label: "Widowed" },
+      ],
+    },
+    { label: "Year you moved to the address", key: "yearMovedToAddress", type: "text" },
+    {
+      label: "Educational level",
+      key: "educationalLevel",
+      fieldType: "select",
+      selectOptions: [
+        { value: "B.sc", label: "B.sc" },
+        { value: "M.sc", label: "M.sc" },
+        { value: "Ph.D", label: "Ph.D" },
+        { value: "HND", label: "HND" },
+        { value: "OND", label: "OND" },
+        { value: "SSCE", label: "SSCE" },
+        { value: "Primary", label: "Primary" },
+      ],
+    },
+  ];
+
+  const onSubmit = (data: PersonalInfoFormData) => {
     // TODO: Save data to backend
     setIsEditing(false);
-    console.log("Saving data:", formData);
+    console.log("Saving data:", data);
   };
 
   const handleCancel = () => {
-    // Reset to original values if needed
+    // Reset to original values
+    reset(originalData);
     setIsEditing(false);
   };
 
   return (
-    <div className="max-w-5xl">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        {fields.map((field) => (
-          <FieldItem
-            key={field.key}
-            label={field.label}
-            value={field.value}
-            type={field.type}
-            readOnly={!isEditing}
-            onChange={(value) => handleFieldChange(field.key, value)}
-          />
-        ))}
-      </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+    >
+      <Form form={form}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            {fields.map((field) => (
+              <EditableField
+                key={field.key}
+                label={field.label}
+                name={field.key}
+                control={control}
+                value={formData[field.key] || ""}
+                type={field.type}
+                isEditing={isEditing}
+                fieldType={field.fieldType}
+                selectOptions={field.selectOptions}
+              />
+            ))}
+          </div>
 
-      {/* Action Buttons */}
-      <div className="flex gap-4 justify-end">
-        {!isEditing ? (
-          <Button
-            content="Edit Profile"
-            classes="primary-btn btn-md"
-            onClick={() => setIsEditing(true)}
-          />
-        ) : (
-          <>
-            <Button
-              content="Cancel"
-              classes="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg transition btn-md"
-              onClick={handleCancel}
-            />
-            <Button
-              content="Save Changes"
-              classes="primary-btn btn-md"
-              onClick={handleSave}
-            />
-          </>
-        )}
-      </div>
-    </div>
+          {/* Action Buttons */}
+          <div className="flex gap-4 justify-center">
+            {!isEditing ? (
+              <Button
+                type="button"
+                content="Edit Profile"
+                classes="primary-btn btn-md px-8"
+                onClick={() => setIsEditing(true)}
+              />
+            ) : (
+              <>
+                <Button
+                  type="button"
+                  content="Cancel"
+                  classes="bg-gray-200 hover:bg-gray-300 text-gray-700 px-8 py-2 rounded-lg transition btn-md"
+                  onClick={handleCancel}
+                />
+                <Button
+                  type="submit"
+                  content="Save Changes"
+                  classes="primary-btn btn-md px-8"
+                />
+              </>
+            )}
+          </div>
+          </div>
+        </form>
+      </Form>
+    </motion.div>
   );
 }

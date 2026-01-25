@@ -19,19 +19,19 @@ export default function SettingsTabs({ activeTab, onTabChange }: SettingsTabsPro
 
   return (
     <div className="px-4 sm:px-6 mb-6">
-      <div className="flex flex-wrap gap-2 sm:gap-4">
+      <div className="flex justify-center items-center gap-2 sm:gap-4">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-md transition-all ${
               activeTab === tab.id
-                ? "bg-brand-purple text-white border-brand-purple"
-                : "bg-white text-gray-700 border-gray-300 hover:border-brand-purple"
+                ? "bg-brand-light-purple text-brand-purple shadow-2xl shadow-gray-500"
+                : " text-gray-700 border-gray-300 hover:border-brand-light-purple"
             }`}
           >
-            <Icon path={tab.icon} size={0.8} />
-            <span className="text-sm font-medium">{tab.label}</span>
+            <Icon path={tab.icon} size={0.8} className="border-2 border-brand-purple rounded-sm bg-white" />
+            <span className="text-sm font-bold">{tab.label}</span>
           </button>
         ))}
       </div>

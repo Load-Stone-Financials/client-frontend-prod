@@ -7,7 +7,6 @@ import {
 import Icon from "@mdi/react";
 import { useState } from "react";
 import Modal from "@/components/ui/modal/Modal";
-
 import type { TransferType } from "@/types/wallet";
 import Estatement from "./Estatement";
 import Transfer from "./Transfer";
