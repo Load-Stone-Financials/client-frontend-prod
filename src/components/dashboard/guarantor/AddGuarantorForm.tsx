@@ -52,7 +52,7 @@ export default function AddGuarantorForm() {
     console.log("Form data:", data);
     setIsSubmitting(true);
     setSavedGuarantorName(data.fullName);
-    
+
     // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
@@ -88,7 +88,7 @@ export default function AddGuarantorForm() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Personal Information Section */}
               <div className="mb-6">
-             
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormFieldText
                     control={control}
@@ -127,7 +127,7 @@ export default function AddGuarantorForm() {
 
               {/* Contact Information */}
               <div className="mb-6">
-        
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormFieldText
                     control={control}
@@ -175,7 +175,7 @@ export default function AddGuarantorForm() {
 
               {/* Employment Information */}
               <div className="mb-6">
-              
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormFieldText
                     control={control}
@@ -194,7 +194,7 @@ export default function AddGuarantorForm() {
 
               {/* Verification Details */}
               <div className="mb-6">
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormFieldText
                     control={control}

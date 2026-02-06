@@ -10,7 +10,6 @@ import { FormFieldPassword } from "@/components/ui/forms/FormFieldPassword";
 interface LoginProps {
   onSwitchToSignup?: () => void;
   onClose?: () => void;
-  
 }
 
 export default function Login({
