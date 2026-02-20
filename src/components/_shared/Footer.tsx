@@ -60,9 +60,10 @@ export default function Footer() {
               </div>
               <div className="lg:w-[225px] lg:h-[110px] mx-4  fw-500 text-start lg:pt-[55px]">
                 <h3 className="fw-700  font-semibold ">ADDRESS</h3>
-                <h4 className=" fw-500 pt-2 ">Maryland, Ikeja, Lagos</h4>
+                <h4 className=" fw-500 pt-2 ">Temidayo, Ajadi Power Line, Ologun Eru
+RD., Ibadan, Ido, Oyo State</h4>
 
-                <h4 className="fw-400 text-white pt-2">info@loadstone.com</h4>
+                <h4 className="fw-400 text-white pt-2">info@loadstonefinancials.com</h4>
               </div>
             </div>
 
