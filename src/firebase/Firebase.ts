@@ -1,4 +1,9 @@
-import type {  FirebaseOptions } from "firebase/app";
+import type { FirebaseOptions } from "firebase/app";
+import  { initializeApp } from "firebase/app";
+import  { getAuth, onAuthStateChanged, type User } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+import { getFunctions } from "firebase/functions";
+
 
 
 export const firebaseConfig: FirebaseOptions = {
@@ -8,4 +13,17 @@ export const firebaseConfig: FirebaseOptions = {
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 };
+
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth();
+export const database = getDatabase(app);
+
+export const functions = getFunctions(app)
+
+export const onAuthStateChangedListener = (callback: (user: User | null) => void) => {
+  onAuthStateChanged(auth, callback);
+};
+
