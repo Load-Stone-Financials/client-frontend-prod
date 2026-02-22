@@ -1,14 +1,17 @@
 import BaseError from './base.type';
 
-enum FirebaseCustomCodes {
-  NOT_FOUND = 'functions/not-found',
-}
+export const FirebaseCustomCodes = {
+  NOT_FOUND: 'functions/not-found',
+} as const;
 
 export default class FirebaseCustomError extends BaseError {
+  declare code: string | number | (typeof FirebaseCustomCodes)[keyof typeof FirebaseCustomCodes];
+
   constructor(
     message: string,
-    public code: string | number | FirebaseCustomCodes,
+    code: string | number | (typeof FirebaseCustomCodes)[keyof typeof FirebaseCustomCodes],
   ) {
-    super(message, code);
+    super(message, code as string | number | (keyof typeof FirebaseCustomCodes));
+    this.code = code;
   }
 }

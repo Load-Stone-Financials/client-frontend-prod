@@ -1,13 +1,13 @@
 const BaseDirectories = {
   BASE_URL: import.meta.env.VITE_BASE_URL,
-  APP_API_BASE_URL: import.meta.env.VITE_APP_API_BASEURL,
+  API_BASE_URL: import.meta.env.VITE_APP_API_BASEURL,
 
   headers: {
     accept: "application/json",
     Authorization: `Bearer ${window.sessionStorage.getItem("accessToken")}`,
     "Content-Type": "application/json",
   },
-  
+
 
   /** Directories and folders. */
   IMAGES_DIR: "/images",

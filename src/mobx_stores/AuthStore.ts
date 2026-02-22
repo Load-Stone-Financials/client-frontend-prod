@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */ import {
+/* eslint-disable react-hooks/exhaustive-deps */
+import {
   EmailAuthProvider,
-  User,
+  type User,
   applyActionCode,
   confirmPasswordReset,
   createUserWithEmailAndPassword,
@@ -13,8 +14,8 @@
 } from "firebase/auth";
 import { configure, makeAutoObservable, runInAction } from "mobx";
 import { auth, functions } from "../firebase/Firebase";
-import {
-  RegistrationResponseJSON,
+import  {
+  type RegistrationResponseJSON,
   startAuthentication,
   startRegistration,
 } from "@simplewebauthn/browser";
@@ -22,8 +23,8 @@ import { httpsCallable } from "firebase/functions";
 import { signInWithCustomToken } from "firebase/auth";
 import { toast } from "react-toastify";
 import { BrowserLogger } from "../common/logger/Logger";
-import { PasskeyResponse } from "../types/auth/passkey.type";
-import { UserProfile } from "../types/auth/sessionUser.type";
+import type { PasskeyResponse } from "../types/auth/passkey.type";
+import type { UserProfile } from "../types/auth/sessionUser.type";
 import FirebaseCustomError from "../types/error/firebase.type";
 import BaseError from "../types/error/base.type";
 import axios from "axios";
@@ -465,6 +466,7 @@ export class AuthStore {
 
       // Log user into Firebase
       const user = await signInWithCustomToken(auth, data.token);
+      return { error: false, data: user };
     } catch (error: any) {
       // Errors from simple web authn return a name property
       if (error?.name === "NotAllowedError") {
@@ -508,13 +510,18 @@ export class AuthStore {
       const finish = httpsCallable(functions, "finishPasskeyRegistration");
 
       // 3. Send response back
-      const { data }: any = await finish({
-        email: this.user?.email,
-        response: this.passkeyResponse,
+      const { data }: { data: { error: boolean; message: string } } = (await finish({
+        email: this.user?.email as string,
+        response: this.passkeyResponse as unknown as RegistrationResponseJSON,
         deviceName: passkeyName,
-      });
+      }))  as { data: { error: boolean; message: string } };
+      if (data.error) {
+        toast.error(data.message);
+        return { error: true };
+      }
       toast.success("Passkey created");
     } catch (error: any) {
+      console.log(error);
       toast.error("Unable to create passkey");
     }
   }
@@ -533,6 +540,7 @@ export class AuthStore {
       this.setUserPasskeys(passkeys);
       this.loading = false;
     } catch (error: any) {
+      console.log(error);
       toast.error("Unable to get passkeys");
     }
   }
@@ -881,7 +889,9 @@ export class AuthStore {
     this.passkeyResponse = res;
   }
 
-  setUserPasskeys(res: PasskeyResponse | {}) {
+  setUserPasskeys(res: PasskeyResponse | {
+    [key: string]: any;
+  }) {
     this.userPasskeys = res;
   }
 }

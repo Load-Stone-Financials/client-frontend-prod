@@ -1,4 +1,5 @@
-import { AuthStore } from "@/mobx_stores/Authstore";
+
+import { AuthStore } from "@/mobx_stores/AuthStore";
 import { createContext } from "react";
 
 
