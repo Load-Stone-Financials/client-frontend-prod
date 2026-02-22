@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */ import { USER_ACTION_TYPES } from './user.types';
-
+import { USER_ACTION_TYPES } from "./user.types";
 interface UserAction {
   type: string;
   payload: any;

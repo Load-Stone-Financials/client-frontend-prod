@@ -5,7 +5,6 @@ import { getDatabase } from "firebase/database";
 import { getFunctions } from "firebase/functions";
 
 
-
 export const firebaseConfig: FirebaseOptions = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
