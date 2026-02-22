@@ -1,19 +1,21 @@
 import Confetti from 'react-confetti';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from "@/components/ui/modal/Modal";
 import BaseDirectories from "@/baseDir/baseDirectories";
 
 export default function VerifyEmailSuccessful() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    setTimeout(() => {
-      setIsOpen(true);
-    }, 1000);
+    const t = setTimeout(() => setIsOpen(true), 1000);
+    return () => clearTimeout(t);
   }, []);
 
   const handleClose = () => {
     setIsOpen(false);
-    window.location.href = "/login";
+    navigate('/login', { replace: true });
   };
 
   if (!isOpen) return null;

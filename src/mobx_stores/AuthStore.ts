@@ -88,7 +88,7 @@ export class AuthStore {
         });
       }
       const actionCodeSettings = {
-        url: `${BaseDirectories.BASE_URL}/dashboard/overview/?email=${auth.currentUser?.email}`,
+        url: `${BaseDirectories.BASE_URL}/verify-email?email=${encodeURIComponent(auth.currentUser?.email ?? "")}`,
         handleCodeInApp: true,
       };
       await sendEmailVerification(res.user, actionCodeSettings)
@@ -377,7 +377,7 @@ export class AuthStore {
     this.setLoading(true);
     try {
       const actionCodeSettings = {
-        url: `${BaseDirectories.BASE_URL}/dashboard/overview/?email=${auth.currentUser?.email}`,
+        url: `${BaseDirectories.BASE_URL}/verify-email?email=${encodeURIComponent(auth.currentUser?.email ?? "")}`,
         handleCodeInApp: true,
       };
       await sendEmailVerification(this.user as User, actionCodeSettings)

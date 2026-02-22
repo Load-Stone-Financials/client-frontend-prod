@@ -23,6 +23,7 @@ import FAQ from "@/pages/landing/FAQ";
 import GuarantorDetails from "@/components/dashboard/guarantor/GuarantorDetails";
 import AddGuarantorForm from "@/components/dashboard/guarantor/AddGuarantorForm";
 import NotFound from "@/pages/NotFound";
+import VerifyEmailSuccessful from "@/pages/auth/VerifyEmailSuccessful";
 
 export default function MainRoutes() {
   AOS.init();
@@ -30,6 +31,7 @@ export default function MainRoutes() {
   return (
     <>
       <Routes>
+        <Route path="/verify-email" element={<VerifyEmailSuccessful />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/about-us" element={<AboutUs />} />
