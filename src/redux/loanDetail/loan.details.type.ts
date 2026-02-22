@@ -1,0 +1,3 @@
+export const LOAN_DETAILS_ACTION_TYPES = {
+  GET_LOAN_DETAILS: 'loanDetails/GET_LOAN_DETAILS',
+};
