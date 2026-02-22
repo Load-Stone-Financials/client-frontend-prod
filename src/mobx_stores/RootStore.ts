@@ -1,5 +1,6 @@
 
 import { AuthStore } from "@/mobx_stores/AuthStore";
+import { ProfileStore } from "@/mobx_stores/ProfileStore";
 import { createContext } from "react";
 
 
@@ -7,7 +8,7 @@ import { createContext } from "react";
 interface StoreContextInterface {
   authStore: AuthStore;
 //   guarantorStore: GuarantorStore;
-//   profileStore: ProfileStore;
+  profileStore: ProfileStore;
 //   walletStore: WalletStore;
 //   investStore: InvestStore;
 //   billStore: BillStore;
@@ -19,7 +20,7 @@ interface StoreContextInterface {
 export const authStore = new AuthStore();
 // const loansStore = new LoansStore();
 // const guarantorStore = new GuarantorStore();
-// const profileStore = new ProfileStore();
+const profileStore = new ProfileStore();
 // const walletStore = new WalletStore();
 // const investStore = new InvestStore();
 // const billStore = new BillStore();
@@ -29,7 +30,7 @@ export const authStore = new AuthStore();
 
 export const StoreContext = createContext<StoreContextInterface>({
     authStore,
-
+    profileStore,
 //   loansStore,
 //   guarantorStore,
 //   profileStore,

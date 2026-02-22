@@ -8,7 +8,7 @@ import { configure, makeAutoObservable, runInAction, toJS } from "mobx";
 import { toast } from "react-toastify";
 import BaseDirectories from "@/baseDir/baseDirectories";
 import { BrowserLogger } from "@/common/logger/Logger";
-import { ApiUserProfile } from "@/types/response/getProfile.type";
+import type { ApiUserProfile } from "@/types/response/getProfile.type";
 
 configure({ enforceActions: "always" });
 
@@ -355,7 +355,7 @@ export class ProfileStore {
       .post(
         `${BaseDirectories.API_BASE_URL}/users/change-notification-settings/${
           this.userId
-        }?${queryString.stringify(query)}`,
+        }?${new URLSearchParams(query).toString()}`,
         {},
         {
           headers,
