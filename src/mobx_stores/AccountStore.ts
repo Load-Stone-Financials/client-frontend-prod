@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */ import axios from "axios";
+/* eslint-disable react-hooks/exhaustive-deps */
+import axios from "axios";
 import { configure, makeAutoObservable, runInAction } from "mobx";
 import { toast } from "react-toastify";
 import { BrowserLogger } from "../common/logger/Logger";
