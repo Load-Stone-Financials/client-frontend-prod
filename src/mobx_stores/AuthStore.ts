@@ -35,9 +35,9 @@ configure({ enforceActions: "always" });
 export class AuthStore {
   authenticated = false;
   isSessionConflicted =
-    false || window.sessionStorage.getItem("isSessionConflicted") === "true";
-  isActiveUser = true || window.sessionStorage.getItem("userStatus") === "true";
-  userPasskeys: PasskeyResponse | {} = {};
+    window.sessionStorage.getItem("isSessionConflicted") === "true";
+  isActiveUser = window.sessionStorage.getItem("userStatus") === "true";
+  userPasskeys: PasskeyResponse | object = {};
   loading = false;
   submitting = false;
   passkeyResponse: RegistrationResponseJSON | null = null;
@@ -45,7 +45,6 @@ export class AuthStore {
   isPhoneVerified = true;
   requiresSelfieVerification = false;
   hasBvn = false;
-  // isCheckingBvnStatus = false;
   success = "";
   verified = false;
   token: any = sessionStorage.getItem("accessToken") || "";
