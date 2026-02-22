@@ -1,4 +1,7 @@
 const BaseDirectories = {
+  BASE_URL: import.meta.env.VITE_BASE_URL,
+  APP_API_BASE_URL: import.meta.env.VITE_APP_API_BASEURL,
+
   /** Directories and folders. */
   IMAGES_DIR: "/images",
   LOGOS_DIR: "/images/logos",
@@ -6,11 +9,9 @@ const BaseDirectories = {
   LANDING_DIR: "/images/landing",
   ABOUT_US_DIR: "/images/landing/AboutUs",
   CONTACT_US_DIR: "/images/landing/ContactUs",
-  BLOG_MAIN_DIR: "images/landing/BlogMain"
+  BLOG_MAIN_DIR: "images/landing/BlogMain",
 
-
-  // Usage
-  //    <img src={`${BaseDirectories.IMAGES_DIR}/403.png`}  alt="Loadstone"/>
+ 
 };
 
 export default BaseDirectories;
