@@ -15,7 +15,7 @@ export default function VerifyEmailSuccessful() {
 
   const handleClose = () => {
     setIsOpen(false);
-    navigate('/login', { replace: true });
+    navigate({ pathname: "/", search: "?step=phoneVerification" }, { replace: true });
   };
 
   if (!isOpen) return null;

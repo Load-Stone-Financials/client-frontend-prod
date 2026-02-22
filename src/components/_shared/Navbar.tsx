@@ -1,5 +1,5 @@
 import { navLink, productLinks, supportLinks } from "../../data/landing";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import BaseDirectories from "../../baseDir/baseDirectories";
 import Dropdown from "../ui/Dropdown";
@@ -7,15 +7,21 @@ import Button from "../ui/Button";
 import Modal from "../ui/modal/Modal";
 import Login from "../../pages/auth/Login";
 import Signup from "../../pages/auth/Signup";
+import type { SignupStep } from "@/types/onboarding";
+
+const ONBOARDING_STEP_PARAM = "step";
 
 export default function Navbar() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [initialSignupStep, setInitialSignupStep] = useState<SignupStep | undefined>(undefined);
 
   const handleSwitchToSignup = () => {
+    setInitialSignupStep(undefined);
     setIsLoginModalOpen(false);
     setIsSignupModalOpen(true);
   };
@@ -23,6 +29,20 @@ export default function Navbar() {
   const handleSwitchToLogin = () => {
     setIsSignupModalOpen(false);
     setIsLoginModalOpen(true);
+  };
+
+  useEffect(() => {
+    const step = searchParams.get(ONBOARDING_STEP_PARAM);
+    if (step === "phoneVerification") {
+      setIsSignupModalOpen(true);
+      setInitialSignupStep("phoneVerification");
+      setSearchParams({}, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
+
+  const handleCloseSignup = () => {
+    setIsSignupModalOpen(false);
+    setInitialSignupStep(undefined);
   };
 
   useEffect(() => {
@@ -239,13 +259,14 @@ export default function Navbar() {
       {/* Signup Modal */}
       <Modal
         isOpen={isSignupModalOpen}
-        onClose={() => setIsSignupModalOpen(false)}
+        onClose={handleCloseSignup}
         title=""
         maxWidth="lg"
       >
         <Signup
           onSwitchToLogin={handleSwitchToLogin}
-          onClose={() => setIsSignupModalOpen(false)}
+          onClose={handleCloseSignup}
+          initialStep={initialSignupStep}
         />
       </Modal>
     </section>

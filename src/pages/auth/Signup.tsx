@@ -2,6 +2,7 @@ import {
   SIGNUP_FLOW,
   type AuthOption,
   type SignupFormData,
+  type SignupStep,
 } from "../../types/onboarding";
 import { useState } from "react";
 import Verification from "../../components/ui/modal/onboarding/Verification";
@@ -15,15 +16,22 @@ import Bvn from "@/components/ui/modal/onboarding/Bvn";
 import Pin from "@/components/ui/modal/onboarding/Pin";
 import { authStore } from "@/mobx_stores/RootStore";
 
+function getInitialStepIndex(initialStep: SignupStep | undefined): number {
+  if (!initialStep) return 0;
+  const index = SIGNUP_FLOW.indexOf(initialStep);
+  return index >= 0 ? index : 0;
+}
+
 export default function Signup({
-  // onClose,
   onSwitchToLogin,
+  initialStep,
 }: {
   onClose: () => void;
   onSwitchToLogin: () => void;
+  initialStep?: SignupStep;
 }) {
   const [authMethod, setAuthMethod] = useState<AuthOption>("password");
-  const [stepIndex, setStepIndex] = useState(0);
+  const [stepIndex, setStepIndex] = useState(() => getInitialStepIndex(initialStep));
   const step = SIGNUP_FLOW[stepIndex];
   const [error, setError] = useState("");
   const form = useForm<SignupFormData>({
