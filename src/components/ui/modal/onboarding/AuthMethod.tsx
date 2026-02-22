@@ -24,7 +24,7 @@ export default function AuthMethod({
   value,
   onChange,
   error,
-  setError: _setError,
+  // setError: _setError,
   onSwitchToLogin,
   loading: externalLoading,
 }: AuthMethodProps) {
