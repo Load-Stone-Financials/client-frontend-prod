@@ -110,9 +110,11 @@ export class AuthStore {
       runInAction(() => {
         this.loading = false;
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       this.logger.error(`User | Sign Up | ${details.email}`, error);
-      this.setError(error);
+      this.setError(
+        error instanceof Error ? error.message : String(error ?? "Sign up failed")
+      );
       runInAction(() => {
         this.loading = false;
       });

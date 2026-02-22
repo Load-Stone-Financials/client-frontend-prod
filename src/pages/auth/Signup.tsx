@@ -13,6 +13,7 @@ import PhoneNo from "@/components/ui/modal/onboarding/PhoneNo";
 import Otp from "@/components/ui/modal/onboarding/Otp";
 import Bvn from "@/components/ui/modal/onboarding/Bvn";
 import Pin from "@/components/ui/modal/onboarding/Pin";
+import { authStore } from "@/mobx_stores/RootStore";
 
 export default function Signup({
   // onClose,
@@ -43,19 +44,43 @@ export default function Signup({
 
   const next = () =>
     setStepIndex((index) => Math.min(index + 1, SIGNUP_FLOW.length - 1));
-  // const back = () =>
-  //   setStep((s) => (s === "verification" ? "password" : "account"));
+
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (data: SignupFormData) => {
+    setError("");
+    if (step === "password" && authMethod === "password") {
+      setSubmitting(true);
+      await authStore.CreateUser({
+        email: data.email,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      });
+      setSubmitting(false);
+      if (authStore.error) {
+        setError(authStore.error);
+        return;
+      }
+      next();
+    } else {
+      next();
+    }
+  };
+
+  const displayError = step === "password" ? authStore.error || error : error;
+  const isLoading = step === "password" ? submitting : false;
+
   return (
     <>
       <title> Signup - Loadstone Financial</title>
       <meta name="description" content="Signup to Loadstone" />
       <Form form={form}>
-        <form onSubmit={form.handleSubmit(next)} data-aos="fade-right">
+        <form onSubmit={form.handleSubmit(handleSubmit)} data-aos="fade-right">
           {step === "account" && (
             <Account
               control={form.control}
-              // onNext={next}
-              error={error}
+              error={displayError}
               setError={setError}
               onSwitchToLogin={onSwitchToLogin}
             />
@@ -66,9 +91,10 @@ export default function Signup({
               control={form.control}
               value={authMethod}
               onChange={setAuthMethod}
-              error={error}
+              error={displayError}
               setError={setError}
               onSwitchToLogin={onSwitchToLogin}
+              loading={isLoading}
             />
           )}
 

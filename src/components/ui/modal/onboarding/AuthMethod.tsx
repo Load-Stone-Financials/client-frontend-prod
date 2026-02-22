@@ -4,7 +4,6 @@ import Button from "../../Button";
 import { Label } from "../../label";
 import { Checkbox } from "../../checkbox";
 import { Link } from "react-router";
-import { useState } from "react";
 import SmallSpinner from "../../SmallSpinner";
 import { FormFieldPassword } from "../../forms/FormFieldPassword";
 import BaseDirectories from "@/baseDir/baseDirectories";
@@ -16,7 +15,8 @@ type AuthMethodProps = {
   error: string;
   setError: (error: string) => void;
   onSwitchToLogin: () => void;
-
+  /** When provided (e.g. from auth store), used instead of local loading for Sign Up button */
+  loading?: boolean;
 };
 
 export default function AuthMethod({
@@ -24,16 +24,11 @@ export default function AuthMethod({
   value,
   onChange,
   error,
-  setError,
+  setError: _setError,
   onSwitchToLogin,
+  loading: externalLoading,
 }: AuthMethodProps) {
-  const [isLoading, setIsLoading] = useState(false);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleSubmit = async () => {
-    setError("");
-    setIsLoading(true);
-  };
+  const loading = externalLoading ?? false;
 
   return (
     <div>
@@ -123,14 +118,13 @@ export default function AuthMethod({
           Terms of Service
         </Link>
       </small>
-      {isLoading ? (
+      {loading ? (
         <SmallSpinner />
       ) : (
         <Button
           content="Sign Up"
           type="submit"
-          disabled={isLoading}
-          onClick={handleSubmit}
+          disabled={loading}
           classes="primary-btn btn-md mb-2 !w-full mt-6"
         />
       )}
