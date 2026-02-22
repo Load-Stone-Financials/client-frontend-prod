@@ -34,16 +34,16 @@ export default function Account({
             name="firstName"
             label="First Name"
             placeholder="John"
-            className="col-span-6"
-            // required
+            className="col-span-6 text-white"
+            required
           />
           <FormFieldText
             control={control}
             name="lastName"
             label="Last Name"
             placeholder="Doe"
-            className="col-span-6"
-            // required
+            className="col-span-6 text-white"
+            required
           />
         </div>
 
@@ -54,6 +54,7 @@ export default function Account({
             label="Email"
             type="email"
             placeholder="you@example.com"
+            className="text-white"
             // required
           />
           <small className="text-gray-500 mt-0">
@@ -61,11 +62,11 @@ export default function Account({
           </small>
         </div>
         <div className="text-start">
-          <PhoneInput 
-            defaultCountry="ng" 
-            value="" 
-            onChange={() => {}} 
-            inputClassName="!w-full"
+          <PhoneInput
+            defaultCountry="ng"
+            value=""
+            onChange={() => {}}
+            inputClassName="!w-full text-white placeholder:text-white"
             className="!w-full"
             style={{ width: '100%' }}
             inputStyle={{ width: '100%' }}
@@ -74,18 +75,7 @@ export default function Account({
             Your phone number must be a valid phone number
           </small>
         </div>
-        {/* <div className="text-start">
-          <FormFieldText
-            control={control}
-            name="userName"
-            label="Username"
-            placeholder="johndoe"
-            // required
-          />
-          <small className="text-gray-500 mt-0">
-            Your username must contain only letters (a-z) and numbers (0-9)
-          </small>
-        </div> */}
+      
       </div>
       <Button
         content="Next"
