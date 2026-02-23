@@ -106,6 +106,28 @@ export class AuthStore {
           );
           return;
         });
+
+      try {
+        await this.registerUserOnBackend({
+          uid: res.user.uid,
+          email: details.email,
+          firstName: details.firstName,
+          lastName: details.lastName,
+        });
+      } catch (err: unknown) {
+        const message =
+          axios.isAxiosError(err) && err.response?.data?.message
+            ? String(err.response.data.message)
+            : err instanceof Error
+              ? err.message
+              : "Could not register with the server. Please try again.";
+        this.setError(message);
+        runInAction(() => {
+          this.loading = false;
+        });
+        return;
+      }
+
       this.setSuccess(res);
       runInAction(() => {
         this.loading = false;
@@ -118,6 +140,33 @@ export class AuthStore {
       runInAction(() => {
         this.loading = false;
       });
+    }
+  }
+
+  /**
+   * Register the newly created Firebase user on the Nest backend.
+   * Call this right after Firebase signup so your API has the user record.
+   * Stores access_token in session if the backend returns it.
+   */
+  private async registerUserOnBackend(payload: {
+    uid: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+  }): Promise<void> {
+    const { data } = await axios.post<{ access_token?: string; token?: string }>(
+      `${BaseDirectories.API_BASE_URL}/auth/register`,
+      payload,
+      {
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const token = data?.access_token ?? data?.token;
+    if (token) {
+      this.SetAccessToken(token);
     }
   }
 
@@ -194,7 +243,6 @@ export class AuthStore {
       });
     }
   }
-  //NOTE - Mary
 
   async sendSignupPhoneOtp(phoneNumber?: string) {
     const headers = {
