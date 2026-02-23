@@ -1,11 +1,17 @@
 import OTPInput from "react-otp-input";
 import Button from "../../Button";
-import {  useState } from "react";
+import { useState } from "react";
 import { Input } from "../../input";
 import { Label } from "../../label";
-import toast from "react-hot-toast";
+import { profileStore } from "@/mobx_stores/RootStore";
+import { toast } from "react-toastify";
 
-export default function Pin() {
+type PinProps = {
+  onNext: () => void;
+  onBack?: () => void;
+};
+
+export default function Pin({ onNext, onBack }: PinProps) {
   const [pin, setPin] = useState("");
   const [confirmPin, setConfirmPin] = useState("");
   const [showPin, setShowPin] = useState(false);
@@ -44,9 +50,15 @@ export default function Pin() {
 
   const canSubmit = isPinComplete && pinMatch;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!canSubmit) return;
-    toast.success("PIN created successfully");
+    const result = await profileStore.createPinAsync(
+      { newPin: pin, confirmPin },
+      true
+    );
+    if (!result.error) {
+      onNext();
+    }
   };
 
   return (
@@ -103,7 +115,7 @@ export default function Pin() {
         classes={`primary-btn btn-md my-6 !w-full ${
           !canSubmit ? "opacity-50 cursor-not-allowed" : ""
         }`}
-        type="submit"
+        type="button"
       />
     </div>
   );

@@ -47,7 +47,7 @@ export default function Login({
   };
 
   return (
-    <> 
+    <>
     <title>Login - Loadstone Financial</title>
     <meta name="description" content="Login to Loadstone" />
     <Form form={form}>
@@ -63,7 +63,7 @@ export default function Login({
             name="emailOrUsername"
             label="Email or Username"
             placeholder="you@example.com"
-            className=""
+            className="text-white"
             required
           />
           <FormFieldPassword
@@ -71,16 +71,16 @@ export default function Login({
             name="password"
             label="Password"
             placeholder="••••••••"
-            className=""
+            className="text-white"
             required
           />
         </div>
-      
+
           <Button
             content="Login with Password"
             type="submit"
             // onClick={onNext}
-            classes="primary-btn btn-md mb-2 !w-full my-4" disabled={isLoading}  
+            classes="primary-btn btn-md mb-2 !w-full my-4" disabled={isLoading}
           />
           <div className="flex items-center justify-center">
             <div className="border w-full border-gray-600" />{" "}
@@ -108,8 +108,8 @@ export default function Login({
           <div className="text-brand-purple">Trouble with log in?</div>
         </div>
       </form>
-    </Form> 
+    </Form>
     </>
-   
+
   );
 }

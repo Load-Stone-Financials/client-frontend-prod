@@ -561,6 +561,74 @@ export class ProfileStore {
       });
   }
 
+  /**
+   * Async variant for onboarding flows (no forced reload).
+   * Returns whether the PIN creation succeeded.
+   */
+  async createPinAsync(
+    data: { newPin: string; confirmPin: string },
+    markProfileComplete: boolean = true
+  ): Promise<{ error: boolean; message?: string }> {
+    const headers = {
+      accept: "application/json",
+      Authorization: `Bearer ${this.token}`,
+      "Content-Type": "application/json",
+    };
+
+    this.setSubmitting(true);
+    try {
+      const res: AxiosResponse<any> = await axios.post(
+        `${BaseDirectories.API_BASE_URL}/transaction-pin/create-pin`,
+        data,
+        { headers }
+      );
+
+      this.logger.info(
+        `User | Create Pin | ${toJS(this.userProfile?.email)}`,
+        res.data
+      );
+
+      if (res.data?.error) {
+        const message = String(res.data?.message ?? "Unable to create pin");
+        toast.error(message);
+        this.setMessage("error", message);
+        return { error: true, message };
+      }
+
+      const message = String(res.data?.message ?? "Pin created successfully!");
+      toast.success(message);
+      this.setMessage("success", "Pin created successfully!");
+
+      if (markProfileComplete) {
+        const currentUser = JSON.parse(
+          window.sessionStorage.getItem("user") || "{}"
+        );
+        const updatedUser = {
+          ...currentUser,
+          profileProgress: 100,
+          title: "Profile Complete",
+        };
+        this.setToLocalStorage("user", updatedUser);
+        this.shouldDirectToProfileSetup = false;
+        window.sessionStorage.setItem("profileJustCompleted", "true");
+      }
+
+      return { error: false, message };
+    } catch (err: any) {
+      this.logger.error(
+        `User | Create Pin | ${toJS(this.userProfile?.email)}`,
+        err
+      );
+      const message =
+        err?.response?.data?.message || err?.message || "Unable to create pin";
+      toast.error(message);
+      this.setMessage("error", String(message));
+      return { error: true, message: String(message) };
+    } finally {
+      this.setSubmitting(false);
+    }
+  }
+
   getDashboardBalances() {
     const headers = {
       accept: "application/json",

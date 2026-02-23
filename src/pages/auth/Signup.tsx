@@ -15,6 +15,7 @@ import Otp from "@/components/ui/modal/onboarding/Otp";
 import Bvn from "@/components/ui/modal/onboarding/Bvn";
 import Pin from "@/components/ui/modal/onboarding/Pin";
 import { authStore } from "@/mobx_stores/RootStore";
+import { useNavigate } from "react-router-dom";
 
 function getInitialStepIndex(initialStep: SignupStep | undefined): number {
   if (!initialStep) return 0;
@@ -23,6 +24,7 @@ function getInitialStepIndex(initialStep: SignupStep | undefined): number {
 }
 
 export default function Signup({
+  onClose,
   onSwitchToLogin,
   initialStep,
 }: {
@@ -30,10 +32,14 @@ export default function Signup({
   onSwitchToLogin: () => void;
   initialStep?: SignupStep;
 }) {
+  const navigate = useNavigate();
   const [authMethod, setAuthMethod] = useState<AuthOption>("password");
-  const [stepIndex, setStepIndex] = useState(() => getInitialStepIndex(initialStep));
+  const [stepIndex, setStepIndex] = useState(() =>
+    getInitialStepIndex(initialStep)
+  );
   const step = SIGNUP_FLOW[stepIndex];
   const [error, setError] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const form = useForm<SignupFormData>({
     defaultValues: {
       firstName: "",
@@ -52,11 +58,20 @@ export default function Signup({
 
   const next = () =>
     setStepIndex((index) => Math.min(index + 1, SIGNUP_FLOW.length - 1));
+  const goToStep = (target: SignupStep) => {
+    const idx = SIGNUP_FLOW.indexOf(target);
+    setStepIndex(idx >= 0 ? idx : 0);
+  };
 
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (data: SignupFormData) => {
     setError("");
+    if (step === "account") {
+      next();
+      return;
+    }
+
     if (step === "password" && authMethod === "password") {
       setSubmitting(true);
       await authStore.CreateUser({
@@ -71,8 +86,7 @@ export default function Signup({
         return;
       }
       next();
-    } else {
-      next();
+      return;
     }
   };
 
@@ -113,10 +127,38 @@ export default function Signup({
             // setError={setError}
             />
           )}
-          {step === "phoneVerification" && <PhoneNo />}
-          {step === "otpVerification" && <Otp />}
-          {step === "bvnVerification" && <Bvn />}
-          {step === "pinSetup" && <Pin />}
+          {step === "phoneVerification" && (
+            <PhoneNo
+              initialPhoneNumber={phoneNumber}
+              onNext={(phone) => {
+                setPhoneNumber(phone);
+                goToStep("otpVerification");
+              }}
+              onBack={() => goToStep("verification")}
+            />
+          )}
+          {step === "otpVerification" && (
+            <Otp
+              phoneNumber={phoneNumber}
+              onNext={() => goToStep("bvnVerification")}
+              onBack={() => goToStep("phoneVerification")}
+            />
+          )}
+          {step === "bvnVerification" && (
+            <Bvn
+              onNext={() => goToStep("pinSetup")}
+              onBack={() => goToStep("otpVerification")}
+            />
+          )}
+          {step === "pinSetup" && (
+            <Pin
+              onNext={() => {
+                onClose();
+                navigate("/dashboard/", { replace: true });
+              }}
+              onBack={() => goToStep("bvnVerification")}
+            />
+          )}
           {/* {step === "success" && <Success onClose={onClose} />} */}
         </form>
       </Form>

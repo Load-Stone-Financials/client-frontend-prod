@@ -364,6 +364,7 @@ export class AuthStore {
         toast.error("Unable to verify OTP. Please try again.");
       }
       console.log("OTP verification error:", error);
+      return { error: true, message: error?.response?.data?.message || error?.message };
     }
   }
 

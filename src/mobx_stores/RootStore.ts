@@ -15,7 +15,7 @@ interface StoreContextInterface {
 }
 
 export const authStore = new AuthStore();
-const profileStore = new ProfileStore();
+export const profileStore = new ProfileStore();
 // const loansStore = new LoansStore();
 // const guarantorStore = new GuarantorStore();
 // const walletStore = new WalletStore();
@@ -43,7 +43,7 @@ export const SetAllAccessTokens = (token: string) => {
   authStore.SetAccessToken(token);
   //   loansStore.SetAccessToken(token);
   //   guarantorStore.SetAccessToken(token);
-  //   profileStore.SetAccessToken(token);
+  profileStore.SetAccessToken(token);
   //   walletStore.SetAccessToken(token);
   //   investStore.SetAccessToken(token);
   //   billStore.SetAccessToken(token);

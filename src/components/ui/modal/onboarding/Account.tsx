@@ -27,7 +27,7 @@ export default function Account({
       </h3>
       {error && <p className="text-red-500 text-sm">{error}</p>}
       <div className="space-y-4 my-4">
-        <div className="grid grid-cols-12 gap-4">
+        {/* <div className="grid grid-cols-12 gap-4">
           {" "}
           <FormFieldText
             control={control}
@@ -45,7 +45,7 @@ export default function Account({
             className="col-span-6 text-white"
             required
           />
-        </div>
+        </div> */}
 
         <div className="text-start">
           <FormFieldText
@@ -75,7 +75,7 @@ export default function Account({
             Your phone number must be a valid phone number
           </small>
         </div>
-      
+
       </div>
       <Button
         content="Next"
