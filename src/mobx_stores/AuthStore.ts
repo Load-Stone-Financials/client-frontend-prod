@@ -107,28 +107,10 @@ export class AuthStore {
           return;
         });
 
-      try {
-        await this.registerUserOnBackend({
-          uid: res.user.uid,
-          email: details.email,
-          firstName: details.firstName,
-          lastName: details.lastName,
-        });
-      } catch (err: unknown) {
-        const message =
-          axios.isAxiosError(err) && err.response?.data?.message
-            ? String(err.response.data.message)
-            : err instanceof Error
-              ? err.message
-              : "Could not register with the server. Please try again.";
-        this.setError(message);
-        runInAction(() => {
-          this.loading = false;
-        });
-        return;
-      }
-
       this.setSuccess(res);
+      // Set Firebase ID token so phone/BVN/PIN API calls work right after signup
+      const idToken = await res.user.getIdToken(true);
+      this.SetAccessToken(idToken);
       runInAction(() => {
         this.loading = false;
       });
@@ -140,33 +122,6 @@ export class AuthStore {
       runInAction(() => {
         this.loading = false;
       });
-    }
-  }
-
-  /**
-   * Register the newly created Firebase user on the Nest backend.
-   * Call this right after Firebase signup so your API has the user record.
-   * Stores access_token in session if the backend returns it.
-   */
-  private async registerUserOnBackend(payload: {
-    uid: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-  }): Promise<void> {
-    const { data } = await axios.post<{ access_token?: string; token?: string }>(
-      `${BaseDirectories.API_BASE_URL}/auth/register`,
-      payload,
-      {
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const token = data?.access_token ?? data?.token;
-    if (token) {
-      this.SetAccessToken(token);
     }
   }
 
@@ -245,9 +200,10 @@ export class AuthStore {
   }
 
   async sendSignupPhoneOtp(phoneNumber?: string) {
+    const token = await this.getApiToken();
     const headers = {
       accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
     const data = phoneNumber ? { phoneNumber } : {};
@@ -290,9 +246,10 @@ export class AuthStore {
   }
 
   async resendSignupPhoneOtp(phoneNumber?: string) {
+    const token = await this.getApiToken();
     const headers = {
       accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
     const data = phoneNumber ? { phoneNumber } : {};
@@ -334,9 +291,10 @@ export class AuthStore {
   }
 
   async verifySignupPhoneOtp(otp: string, phoneNumber?: string) {
+    const token = await this.getApiToken();
     const headers = {
       accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
     try {
@@ -369,9 +327,10 @@ export class AuthStore {
   }
 
   async bvnSignUp(bvn: string, nin: string) {
+    const token = await this.getApiToken();
     const headers = {
       accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
     try {
@@ -893,7 +852,27 @@ export class AuthStore {
   };
 
   SetAccessToken = (token: string) => {
-    this.token = token || sessionStorage.getItem("accessToken");
+    const value = token || sessionStorage.getItem("accessToken") || "";
+    this.token = value;
+    if (token) {
+      window.sessionStorage.setItem("accessToken", token);
+    }
+  };
+
+  /**
+   * Returns the token for API calls. Uses existing token or fetches Firebase ID token
+   * when user is signed in (e.g. right after signup, before backend login).
+   */
+  getApiToken = async (): Promise<string> => {
+    const existing = this.token || sessionStorage.getItem("accessToken");
+    if (existing) return existing;
+    const user = auth.currentUser;
+    if (user) {
+      const idToken = await user.getIdToken(true);
+      this.SetAccessToken(idToken);
+      return idToken;
+    }
+    return "";
   };
 
   setToLocalStorage = (key: string, value: any) => {

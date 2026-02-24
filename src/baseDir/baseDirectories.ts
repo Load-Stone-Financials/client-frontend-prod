@@ -6,12 +6,10 @@ function normalizeApiBaseUrl(value: string | undefined): string {
   return `https://${url}`;
 }
 
-// In dev, use relative path so Vite proxy forwards to API (avoids CORS)
-const rawApiBase = (import.meta.env.VITE_APP_API_BASEURL ?? "").trim();
-const API_BASE_URL =
-  import.meta.env.DEV
-    ? "/api/v1"
-    : normalizeApiBaseUrl(rawApiBase);
+// Always use the API server URL from env (never localhost / relative)
+const API_BASE_URL = normalizeApiBaseUrl(
+  (import.meta.env.VITE_APP_API_BASEURL ?? "").trim()
+);
 
 const BaseDirectories = {
   BASE_URL: import.meta.env.VITE_BASE_URL,

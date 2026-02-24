@@ -29,6 +29,7 @@ export default function Bvn({ onNext, onBack }: BvnProps) {
 
     if (result && result.error === false) {
       await authStore.checkBvnLivenessStatus();
+      toast.success("BVN verified. Proceeding to create your PIN.");
       onNext();
       return;
     }

@@ -40,6 +40,7 @@ export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
       if (uid) {
         await authStore.UpdateIsPhoneVerified(uid, true);
       }
+      toast.success("Phone verified. Proceeding to BVN validation.");
       onNext();
       return;
     }
@@ -53,6 +54,7 @@ export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
     const result = await authStore.resendSignupPhoneOtp(phoneNumber);
     setSubmitting(false);
     if (result?.success) {
+      toast.success("OTP resent.");
       setResendTimer(60);
       setCanResend(false);
     }

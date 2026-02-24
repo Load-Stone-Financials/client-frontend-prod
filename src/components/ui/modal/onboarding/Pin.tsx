@@ -20,14 +20,11 @@ export default function Pin({ onNext, onBack }: PinProps) {
   const inputType = showPin ? "text" : "password";
   const PIN_LENGTH = 4;
 
-  if (
-    pin.length === PIN_LENGTH &&
-    confirmPin.length === PIN_LENGTH &&
-    pin !== confirmPin
-  ) {
-    setError("Pins do not matvch");
-    setConfirmPin("");
-  }
+  const isPinComplete =
+    pin.length === PIN_LENGTH && confirmPin.length === PIN_LENGTH;
+  const pinMatch = pin === confirmPin;
+  const mismatchMessage =
+    isPinComplete && !pinMatch ? "PINs do not match" : error;
 
   const handlePinChange = (value: string) => {
     if (/^\d*$/.test(value)) {
@@ -43,20 +40,21 @@ export default function Pin({ onNext, onBack }: PinProps) {
     }
   };
 
-  const isPinComplete =
-    pin.length === PIN_LENGTH && confirmPin.length === PIN_LENGTH;
-
-  const pinMatch = pin === confirmPin;
-
   const canSubmit = isPinComplete && pinMatch;
 
   const handleSubmit = async () => {
-    if (!canSubmit) return;
+    if (!canSubmit) {
+      if (isPinComplete && !pinMatch) {
+        toast.error("PINs do not match.");
+      }
+      return;
+    }
     const result = await profileStore.createPinAsync(
       { newPin: pin, confirmPin },
       true
     );
     if (!result.error) {
+      toast.success("Transaction PIN created successfully.");
       onNext();
     }
   };
@@ -97,7 +95,9 @@ export default function Pin({ onNext, onBack }: PinProps) {
         inputStyle="pin-style rounded-md border border-gray-300 text-center text-xl font-semibold focus:outline-none focus:ring-2 focus:ring-brand-purple text-gray-100 focus:border-transparent transition"
         renderSeparator={<span className="hidden" />}
       />
-      {error && <small className="text-red-500 text-sm mt-3">{error}</small>}
+      {mismatchMessage && (
+        <small className="text-red-500 text-sm mt-3">{mismatchMessage}</small>
+      )}
       <div className="flex text-gray-300 gap-2 mt-2">
          <Input
           onChange={() => setShowPin(!showPin)}

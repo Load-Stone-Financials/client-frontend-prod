@@ -20,13 +20,11 @@ export default function PhoneNo({
   const [phone, setPhone] = useState(initialPhoneNumber);
   const [submitting, setSubmitting] = useState(false);
   const [resendTimer, setResendTimer] = useState(60);
-  const [canResend, setCanResend] = useState(false);
+
+  const canResend = resendTimer <= 0;
 
   useEffect(() => {
-    if (resendTimer <= 0) {
-      setCanResend(true);
-      return;
-    }
+    if (resendTimer <= 0) return;
     const t = setTimeout(() => setResendTimer((s) => s - 1), 1000);
     return () => clearTimeout(t);
   }, [resendTimer]);
@@ -48,9 +46,11 @@ export default function PhoneNo({
     setSubmitting(false);
 
     if (result?.success) {
+      toast.success("OTP sent. Check your phone and proceed to the next step.");
       onNext(phone);
       return;
     }
+    toast.error("Could not send OTP. Please try again.");
 
     if (result?.statusCode === 400) {
       const msg =
@@ -73,8 +73,8 @@ export default function PhoneNo({
     setSubmitting(false);
 
     if (result?.success) {
+      toast.success("OTP resent.");
       setResendTimer(60);
-      setCanResend(false);
     }
   };
 

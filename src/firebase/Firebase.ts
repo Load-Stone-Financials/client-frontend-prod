@@ -1,6 +1,6 @@
 import type { FirebaseOptions } from "firebase/app";
 import  { initializeApp } from "firebase/app";
-import  { getAuth, onAuthStateChanged, type User } from "firebase/auth";
+import { getAuth, onAuthStateChanged, type Unsubscribe, type User } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getFunctions } from "firebase/functions";
 
@@ -25,7 +25,7 @@ export const database = getDatabase(app);
 
 export const functions = getFunctions(app)
 
-export const onAuthStateChangedListener = (callback: (user: User | null) => void) => {
-  onAuthStateChanged(auth, callback);
+export const onAuthStateChangedListener = (callback: (user: User | null) => void): Unsubscribe => {
+  return onAuthStateChanged(auth, callback);
 };
 

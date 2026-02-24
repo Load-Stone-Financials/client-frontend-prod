@@ -569,9 +569,11 @@ export class ProfileStore {
     data: { newPin: string; confirmPin: string },
     markProfileComplete: boolean = true
   ): Promise<{ error: boolean; message?: string }> {
+    const token =
+      window.sessionStorage.getItem("accessToken") || this.token || "";
     const headers = {
       accept: "application/json",
-      Authorization: `Bearer ${this.token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
 
