@@ -1,11 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import Button from "../../components/ui/Button";
 import { FormFieldText } from "@/components/ui/forms/FormFieldText";
 import type { LoginFormData } from "@/types/onboarding";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { FormFieldPassword } from "@/components/ui/forms/FormFieldPassword";
+import { LogIn } from "@/utils/firebase/AuthFirestore";
+import { auth } from "@/firebase/Firebase";
+import { authStore } from "@/mobx_stores/RootStore";
 
 interface LoginProps {
   onSwitchToSignup?: () => void;
@@ -17,6 +22,7 @@ export default function Login({
   // control,
   onClose,
 }: LoginProps) {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const form = useForm<LoginFormData>({
@@ -26,19 +32,78 @@ export default function Login({
     },
   });
 
+  const resolvePostLogin = async () => {
+    const uid = auth.currentUser?.uid;
+    if (!uid) return "login" as const;
+
+    await authStore.IsPhoneVerified(uid);
+    await authStore.checkBvnLivenessStatus();
+
+    // New user - no phone verified & no BVN yet: go through full onboarding flow
+    if (!authStore.isPhoneVerified && !authStore.hasBvn) {
+      return "onboarding" as const;
+    }
+
+    // Fully verified user: send to dashboard
+    if (authStore.isPhoneVerified && authStore.hasBvn) {
+      return "dashboard" as const;
+    }
+
+    // Fallback: treat as onboarding
+    return "onboarding" as const;
+  };
+
   const handleSubmit = async (data: LoginFormData) => {
     setError("");
     setIsLoading(true);
 
     try {
-      // Add your login API call here
-      console.log("Login data:", data);
+      const res = await LogIn({
+        email: data.emailOrUsername,
+        password: data.password,
+      });
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (res.error) {
+        const code = res.data.code;
+        if (code === "auth/user-not-found") {
+          setError("User not found");
+        } else if (
+          code === "auth/wrong-password" ||
+          code === "auth/invalid-login-credentials"
+        ) {
+          setError("Invalid email or password");
+        } else if (code === "auth/invalid-email") {
+          setError("Invalid email format");
+        } else if (code === "auth/network-request-failed") {
+          setError("Network error. Please check your connection.");
+        } else if (code === "auth/too-many-requests") {
+          setError("Too many attempts. Please try again later.");
+        } else {
+          setError(res.data.message || "Unable to login");
+        }
+        toast.error(error || "Login failed");
+        return;
+      }
 
-      // On success, close modal
-      onClose?.();
+      toast.success("Login successful");
+
+      // Small delay so the toast is visible
+      setTimeout(async () => {
+        const next = await resolvePostLogin();
+
+        if (next === "dashboard") {
+          onClose?.();
+          navigate("/dashboard/", { replace: true });
+          return;
+        }
+
+        if (next === "onboarding") {
+          // Use query param so Navbar opens the signup modal at phoneVerification
+          onClose?.();
+          window.location.href = "/?step=phoneVerification";
+          return;
+        }
+      }, 800);
     } catch (err) {
       setError("Invalid email or password");
     } finally {
