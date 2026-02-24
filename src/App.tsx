@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,6 +9,27 @@ import { authStore, SetAllAccessTokens } from "./mobx_stores/RootStore";
 import { auth, onAuthStateChangedListener } from "./firebase/Firebase";
 
 function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const verifyEmailHandled = useRef(false);
+
+  // Handle Firebase email verification link: ?mode=verifyEmail&oobCode=...&continueUrl=...
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const mode = params.get("mode");
+    const oobCode = params.get("oobCode");
+    if (mode !== "verifyEmail" || !oobCode || verifyEmailHandled.current) return;
+    verifyEmailHandled.current = true;
+    (async () => {
+      try {
+        await authStore.VerifyEmail(oobCode);
+        navigate("/verify-email", { replace: true });
+      } catch {
+        navigate("/", { replace: true });
+      }
+    })();
+  }, [location.search, navigate]);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener(async (user) => {
       if (user) {
