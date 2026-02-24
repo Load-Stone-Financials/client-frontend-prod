@@ -21,7 +21,7 @@ import  {
 } from "@simplewebauthn/browser";
 import { httpsCallable } from "firebase/functions";
 import { signInWithCustomToken } from "firebase/auth";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { BrowserLogger } from "../common/logger/Logger";
 import type { PasskeyResponse } from "../types/auth/passkey.type";
 import type { UserProfile } from "../types/auth/sessionUser.type";
@@ -115,12 +115,13 @@ export class AuthStore {
         this.loading = false;
       });
     } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : String(error ?? "Sign up failed"));
       this.logger.error(`User | Sign Up | ${details.email}`, error);
-      this.setError(
-        error instanceof Error ? error.message : String(error ?? "Sign up failed")
-      );
       runInAction(() => {
         this.loading = false;
+        this.setError(
+          error instanceof Error ? error.message : String(error ?? "Sign up failed")
+        );
       });
     }
   }

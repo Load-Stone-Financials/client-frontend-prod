@@ -16,7 +16,7 @@ import Bvn from "@/components/ui/modal/onboarding/Bvn";
 import Pin from "@/components/ui/modal/onboarding/Pin";
 import { authStore } from "@/mobx_stores/RootStore";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 function getInitialStepIndex(initialStep: SignupStep | undefined): number {
   if (!initialStep) return 0;

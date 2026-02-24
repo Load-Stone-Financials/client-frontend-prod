@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import { configure, makeAutoObservable, runInAction } from "mobx";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { BrowserLogger } from "../common/logger/Logger";
 import BaseDirectories from "@/baseDir/baseDirectories";
 import { applyActionCode, confirmPasswordReset, type User } from "firebase/auth";

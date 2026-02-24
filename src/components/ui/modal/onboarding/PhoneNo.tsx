@@ -4,7 +4,7 @@ import Button from "../../Button";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 type PhoneNoProps = {
   onNext: (phoneNumber: string) => void;
@@ -92,7 +92,7 @@ export default function PhoneNo({
       </h3>
       <p className="text-gray-500 mt-6 self-start">Mobile number</p>
 
-      <div className="w-full mt-2">
+      <div className="w-screen mt-2">
         <PhoneInput
           defaultCountry="ng"
           value={phone}
@@ -105,7 +105,7 @@ export default function PhoneNo({
         {onBack && (
           <Button
             content="Back"
-            classes="!white-btn btn-md flex-1"
+            classes="primary-btn btn-md flex-1"
             type="button"
             onClick={onBack}
           />
