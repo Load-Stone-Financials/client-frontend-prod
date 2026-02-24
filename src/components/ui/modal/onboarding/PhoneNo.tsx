@@ -92,12 +92,13 @@ export default function PhoneNo({
       </h3>
       <p className="text-gray-500 mt-6 self-start">Mobile number</p>
 
-      <div className="w-screen mt-2">
+      <div className="w-full mt-2">
         <PhoneInput
           defaultCountry="ng"
           value={phone}
           onChange={setPhone}
           className="w-full"
+          inputClassName="!w-full"
         />
       </div>
 

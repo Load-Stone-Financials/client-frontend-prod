@@ -2,7 +2,8 @@ import OTPInput from "react-otp-input";
 import Button from "../../Button";
 import { useEffect, useState } from "react";
 import { authStore } from "@/mobx_stores/RootStore";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
+import { runInAction } from "mobx";
 
 type OtpProps = {
   phoneNumber: string;
@@ -18,7 +19,9 @@ export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
 
   useEffect(() => {
     if (resendTimer <= 0) {
-      setCanResend(true);
+      runInAction(() => {
+        setCanResend(true);
+      });
       return;
     }
     const t = setTimeout(() => setResendTimer((s) => s - 1), 1000);
@@ -56,18 +59,18 @@ export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
     if (result?.success) {
       toast.success("OTP resent.");
       setResendTimer(60);
-      setCanResend(false);
+      runInAction(() => {
+        setCanResend(false);
+      });
     }
   };
 
-  const validateNumber = (evt: any) => {
-    const theEvent = evt || window.event;
-    let key = theEvent.keyCode || theEvent.which;
-    key = String.fromCharCode(key);
+  const validateNumber = (evt: React.KeyboardEvent<HTMLInputElement>) => {
+    const theEvent = evt.nativeEvent as KeyboardEvent || window.event;
+    const key = theEvent.key;
     const regex = /[0-9]/;
     if (!regex.test(key)) {
-      theEvent.returnValue = false;
-      if (theEvent.preventDefault) theEvent.preventDefault();
+      evt.preventDefault();
     }
   };
 
@@ -96,18 +99,18 @@ export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
         renderSeparator={<span className="hidden" />}
       />
 
-      <div className="flex gap-3 w-full mt-6">
+      <div className="flex gap-3 flex-1 mt-6">
         {onBack && (
           <Button
             content="Back"
-            classes="white-btn btn-md !w-full"
+            classes="btn-md flex-1"
             type="button"
             onClick={onBack}
           />
         )}
         <Button
           content={submitting ? "Validating..." : "Validate"}
-          classes="primary-btn btn-md !w-full"
+          classes="primary-btn btn-md flex-1"
           type="button"
           disabled={submitting}
           onClick={handleVerify}
