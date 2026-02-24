@@ -105,14 +105,14 @@ export default function PhoneNo({
         {onBack && (
           <Button
             content="Back"
-            classes="white-btn btn-md !w-full"
+            classes="!white-btn btn-md flex-1"
             type="button"
             onClick={onBack}
           />
         )}
         <Button
           content={submitting ? "Sending OTP..." : "Proceed"}
-          classes="primary-btn btn-md !w-full"
+          classes="primary-btn btn-md flex-1"
           type="button"
           disabled={submitting}
           onClick={handleProceed}
