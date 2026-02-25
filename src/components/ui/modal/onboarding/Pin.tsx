@@ -4,14 +4,14 @@ import { useState } from "react";
 import { Input } from "../../input";
 import { Label } from "../../label";
 import { profileStore } from "@/mobx_stores/RootStore";
-import { toast } from "react-toastify";
+    import { toast } from "react-hot-toast";
 
 type PinProps = {
   onNext: () => void;
   onBack?: () => void;
 };
 
-export default function Pin({ onNext, onBack }: PinProps) {
+export default function Pin({ onNext }: PinProps) {
   const [pin, setPin] = useState("");
   const [confirmPin, setConfirmPin] = useState("");
   const [showPin, setShowPin] = useState(false);
@@ -106,13 +106,13 @@ export default function Pin({ onNext, onBack }: PinProps) {
           name="pinCheckbox"
           checked={showPin} className="size-4"
         /><Label htmlFor="pinCheckbox"> Show PIN</Label>{" "}
-       
+
       </div>
       <Button
         onClick={handleSubmit}
         disabled={!canSubmit}
         content="Create PIN"
-        classes={`primary-btn btn-md my-6 !w-full ${
+        classes={`primary-btn btn-md my-6 flex-1 ${
           !canSubmit ? "opacity-50 cursor-not-allowed" : ""
         }`}
         type="button"

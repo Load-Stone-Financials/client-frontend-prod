@@ -103,7 +103,7 @@ export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
         {onBack && (
           <Button
             content="Back"
-            classes="btn-md flex-1"
+            classes="secondary-btn btn-md flex-1"
             type="button"
             onClick={onBack}
           />

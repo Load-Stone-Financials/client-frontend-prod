@@ -4,7 +4,7 @@ import Button from "../../Button";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "../../input";
 import { useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 type BvnProps = {
   onNext: () => void;
@@ -73,18 +73,18 @@ export default function Bvn({ onNext, onBack }: BvnProps) {
         />
       </div>
 
-      <div className="flex gap-3 w-full mt-6">
+      <div className="flex gap-3 flex-1 mt-6">
         {onBack && (
           <Button
             content="Back"
-            classes="white-btn btn-md !w-full"
+            classes="secondary-btn btn-md flex-1"
             type="button"
             onClick={onBack}
           />
         )}
         <Button
           content={submitting ? "Validating..." : "Validate BVN"}
-          classes="primary-btn btn-md !w-full"
+          classes="primary-btn btn-md flex-1"
           type="button"
           disabled={submitting}
           onClick={handleValidate}

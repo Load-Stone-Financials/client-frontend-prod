@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */ import {
-  signInWithEmailAndPassword,
-  signOut,
-} from 'firebase/auth';
-import { onValue, ref, set } from 'firebase/database';
-import { FuctionBrowserLogger } from '../../common/Func_Logger';
-import { auth, database } from '../../firebase/Firebase';
-import { authStore } from '../../mobx_stores/RootStore';
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { onValue, ref, set } from "firebase/database";
+import { auth, database } from "../../firebase/Firebase";
+import { authStore } from "../../mobx_stores/RootStore";
+import { BrowserLogger } from "../../common/logger/Logger";
 
-//signin with email and password
+const logger = new BrowserLogger("AuthFirestore");
 
-export const SetDeviceId = async (response) => {
+// signin with email and password
+
+export const SetDeviceId = async (response: { uid: string }) => {
   let deviceId = localStorage.getItem('deviceId');
 
   if (!deviceId) {
@@ -37,25 +36,13 @@ export const LogIn = async (details: any) => {
       details.password,
     );
 
-    try {
-      FuctionBrowserLogger.prototype.info(
-        `User | Log In | ${details.email}`,
-        response,
-      );
-    } catch (err) {}
+    logger.info(`User | Log In | ${details.email}`, response);
 
     return {
       error: false,
       data: response,
     };
   } catch (err: any) {
-    try {
-      FuctionBrowserLogger.prototype.error(
-        `User | Log In | ${details.email}`,
-        err,
-      );
-    } catch (err) {}
-
     return {
       error: true,
       // data: err,
@@ -67,12 +54,7 @@ export const LogIn = async (details: any) => {
 //Signout user
 export const LogOut = async () => {
   try {
-    try {
-      FuctionBrowserLogger.prototype.info(
-        `User | Log Out | ${auth.currentUser?.email}`,
-        {},
-      );
-    } catch (err) {}
+    logger.info(`User | Log Out | ${auth.currentUser?.email}`, {});
 
     // sign out from Firebase
     await signOut(auth);
@@ -90,14 +72,7 @@ export const LogOut = async () => {
       });
     }
   } catch (error: any) {
-    try {
-      FuctionBrowserLogger.prototype.error(
-        `User | Log Out | ${auth.currentUser?.email}`,
-        {},
-      );
-    } catch (err) {
-      console.error(err);
-    }
+    logger.error(`User | Log Out | ${auth.currentUser?.email}`, error);
   }
 };
 

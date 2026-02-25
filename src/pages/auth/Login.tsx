@@ -11,6 +11,8 @@ import { FormFieldPassword } from "@/components/ui/forms/FormFieldPassword";
 import { LogIn } from "@/utils/firebase/AuthFirestore";
 import { auth } from "@/firebase/Firebase";
 import { authStore } from "@/mobx_stores/RootStore";
+import Spinner from "@/components/ui/Spinner";
+import SmallSpinner from "@/components/ui/SmallSpinner";
 
 interface LoginProps {
   onSwitchToSignup?: () => void;
@@ -113,68 +115,65 @@ export default function Login({
 
   return (
     <>
-    <title>Login - Loadstone Financial</title>
-    <meta name="description" content="Login to Loadstone" />
-    <Form form={form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} data-aos='zoom-out-left'>
-        <h3 className="text-xl text-brand-white text-start font-semibold mb-6">
-         Log into Loanstone
-        </h3>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <div className="space-y-4 my-4">
-          {" "}
-          <FormFieldText
-            control={form.control}
-            name="emailOrUsername"
-            label="Email or Username"
-            placeholder="you@example.com"
-            className="text-white"
-            required
-          />
-          <FormFieldPassword
-            control={form.control}
-            name="password"
-            label="Password"
-            placeholder="••••••••"
-            className="text-white"
-            required
-          />
-        </div>
-
-          <Button
-            content="Login with Password"
-            type="submit"
-            // onClick={onNext}
-            classes="primary-btn btn-md mb-2 !w-full my-4" disabled={isLoading}
-          />
-          <div className="flex items-center justify-center">
-            <div className="border w-full border-gray-600" />{" "}
-            <span className="text-brand-white">OR</span>{" "}
-            <div className="border w-full border-gray-600" />
+      <title>Login - Loadstone Financial</title>
+      <meta name="description" content="Login to Loadstone" />
+      <Form form={form}>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          data-aos="zoom-out-left"
+        >
+          <h3 className="text-xl text-brand-white text-start font-semibold mb-6">
+            Log into Loanstone
+          </h3>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <div className="space-y-4 my-4">
+            {" "}
+            <FormFieldText
+              control={form.control}
+              name="emailOrUsername"
+              label="Email or Username"
+              placeholder="you@example.com"
+              className="text-white"
+              required
+            />
+            <FormFieldPassword
+              control={form.control}
+              name="password"
+              label="Password"
+              placeholder="••••••••"
+              className="text-white"
+              required
+            />
           </div>
-          <Button
-            content="Login with Passkey"
-            type="button"
-            // onClick={onNext}
-            classes="primary-btn !bg-[#190740] !text-brand-purple btn-md my-4 !w-full"
-            disabled
-          />
+          {isLoading ? (
+            <SmallSpinner />
+          ) : (
+            <>
+              {" "}
+              <Button
+                content="Login with Password"
+                type="submit"
+                // onClick={onNext}
+                classes="primary-btn btn-md mb-2 !w-full my-4"
+                disabled={isLoading}
+              />
+            </>
+          )}
 
-        <div className="mt-4 flex justify-between items-center ">
-          <div className="text-sm text-center mt-6 text-brand-white">
-            Already have an account?{" "}
-            <button
-              onClick={onSwitchToSignup}
-              className="text-brand-purple hover:underline cursor-pointer"
-            >
-              Signup
-            </button>
+          <div className="mt-4 flex justify-between items-center ">
+            <div className="text-sm text-center mt-6 text-brand-white">
+              Already have an account?{" "}
+              <button
+                onClick={onSwitchToSignup}
+                className="text-brand-purple hover:underline cursor-pointer"
+              >
+                Signup
+              </button>
+            </div>
+            <div className="text-brand-purple">Trouble with log in?</div>
           </div>
-          <div className="text-brand-purple">Trouble with log in?</div>
-        </div>
-      </form>
-    </Form>
+        </form>
+      </Form>
     </>
-
   );
 }
