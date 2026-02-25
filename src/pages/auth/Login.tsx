@@ -11,7 +11,6 @@ import { FormFieldPassword } from "@/components/ui/forms/FormFieldPassword";
 import { LogIn } from "@/utils/firebase/AuthFirestore";
 import { auth } from "@/firebase/Firebase";
 import { authStore } from "@/mobx_stores/RootStore";
-import Spinner from "@/components/ui/Spinner";
 import SmallSpinner from "@/components/ui/SmallSpinner";
 
 interface LoginProps {
@@ -38,16 +37,16 @@ export default function Login({
     const uid = auth.currentUser?.uid;
     if (!uid) return "login" as const;
 
-    await authStore.IsPhoneVerified(uid);
+    await auth.currentUser?.phoneNumber;
     await authStore.checkBvnLivenessStatus();
 
     // New user - no phone verified & no BVN yet: go through full onboarding flow
-    if (!authStore.isPhoneVerified && !authStore.hasBvn) {
+    if (!auth.currentUser?.phoneNumber && !authStore.hasBvn) {
       return "onboarding" as const;
     }
 
     // Fully verified user: send to dashboard
-    if (authStore.isPhoneVerified && authStore.hasBvn) {
+    if (auth.currentUser?.phoneNumber && authStore.hasBvn) {
       return "dashboard" as const;
     }
 
