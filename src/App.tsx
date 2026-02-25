@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import MainRoutes from "./routes/MainRoutes";
 import { authStore, SetAllAccessTokens } from "./mobx_stores/RootStore";

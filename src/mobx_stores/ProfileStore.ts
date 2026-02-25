@@ -5,7 +5,7 @@ import axios, {
   type AxiosResponse,
 } from "axios";
 import { configure, makeAutoObservable, runInAction, toJS } from "mobx";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import BaseDirectories from "@/baseDir/baseDirectories";
 import { BrowserLogger } from "@/common/logger/Logger";
 import type { ApiUserProfile } from "@/types/response/getProfile.type";
@@ -118,7 +118,7 @@ export class ProfileStore {
             `User | Create Profile | ${toJS(this.userProfile?.email)}`,
             res.data
           );
-          toast.success("Profile created successfully", { autoClose: 2000 });
+          toast.success("Profile created successfully");
           this.setMessage("success", "Profile created successfully");
           this.setToLocalStorage("user", res.data);
           setTimeout(() => {
@@ -920,7 +920,7 @@ export class ProfileStore {
             `User | Delete Account Profile | ${toJS(this.userProfile?.email)}`,
             res.data
           );
-          toast.success(res.data?.message, { autoClose: 2000 });
+          toast.success(res.data?.message);
           this.setMessage("success", "Request Successfully");
           setTimeout(() => {
             this.setMessage("", "");
