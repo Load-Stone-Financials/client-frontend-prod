@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/ui/Button";
 import { FormFieldText } from "@/components/ui/forms/FormFieldText";
@@ -9,7 +9,7 @@ import { Form } from "@/components/ui/form";
 import { FormFieldPassword } from "@/components/ui/forms/FormFieldPassword";
 import { LogIn } from "@/utils/firebase/AuthFirestore";
 import { auth } from "@/firebase/Firebase";
-import { authStore } from "@/mobx_stores/RootStore";
+import { StoreContext } from "@/mobx_stores/RootStore";
 import SmallSpinner from "@/components/ui/SmallSpinner";
 import { observer } from "mobx-react-lite";
 
@@ -24,6 +24,7 @@ function LoginComponent({
   onClose,
 }: LoginProps) {
   const navigate = useNavigate();
+  const { authStore } = useContext(StoreContext);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const form = useForm<LoginFormData>({
