@@ -4,7 +4,7 @@ import {
   type SignupFormData,
   type SignupStep,
 } from "../../types/onboarding";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Verification from "../../components/ui/modal/onboarding/Verification";
 import Account from "../../components/ui/modal/onboarding/Account";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,7 @@ import PhoneNo from "@/components/ui/modal/onboarding/PhoneNo";
 import Otp from "@/components/ui/modal/onboarding/Otp";
 import Bvn from "@/components/ui/modal/onboarding/Bvn";
 import Pin from "@/components/ui/modal/onboarding/Pin";
-import { authStore } from "@/mobx_stores/RootStore";
+import { StoreContext } from "@/mobx_stores/RootStore";
 import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
@@ -24,7 +24,7 @@ function getInitialStepIndex(initialStep: SignupStep | undefined): number {
   return index >= 0 ? index : 0;
 }
 
-function Signup({
+function SignupComponent({
   onClose,
   onSwitchToLogin,
   initialStep,
@@ -35,12 +35,14 @@ function Signup({
 }) {
   const navigate = useNavigate();
   const [authMethod, setAuthMethod] = useState<AuthOption>("password");
+  const { authStore } = useContext(StoreContext);
   const [stepIndex, setStepIndex] = useState(() =>
     getInitialStepIndex(initialStep)
   );
   const step = SIGNUP_FLOW[stepIndex];
   const [error, setError] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+
   const form = useForm<SignupFormData>({
     defaultValues: {
       firstName: "",
@@ -173,4 +175,6 @@ function Signup({
   );
 }
 
-export default observer(Signup);
+const Signup = observer(SignupComponent);
+
+export default Signup;

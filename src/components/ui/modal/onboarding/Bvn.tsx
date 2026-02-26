@@ -11,7 +11,7 @@ type BvnProps = {
   onBack?: () => void;
 };
 
-function Bvn({ onNext, onBack }: BvnProps) {
+function BvnComponent({ onNext, onBack }: BvnProps) {
   const [bvn, setBvn] = useState("");
   const [nin, setNin] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -55,7 +55,7 @@ function Bvn({ onNext, onBack }: BvnProps) {
         <Input
           type="text"
           placeholder="Enter your bank verification number"
-          className="w-80 md:w-96"
+          className="text-white"
           value={bvn}
           onChange={(e) => setBvn(e.target.value)}
           inputMode="numeric"
@@ -68,7 +68,7 @@ function Bvn({ onNext, onBack }: BvnProps) {
         <Input
           type="text"
           placeholder="National Identity number"
-          className="w-80 md:w-96"
+          className="text-white"
           value={nin}
           onChange={(e) => setNin(e.target.value)}
           inputMode="numeric"
@@ -96,4 +96,6 @@ function Bvn({ onNext, onBack }: BvnProps) {
   )
 }
 
-export default observer(Bvn);
+const Bvn = observer(BvnComponent);
+
+export default Bvn;

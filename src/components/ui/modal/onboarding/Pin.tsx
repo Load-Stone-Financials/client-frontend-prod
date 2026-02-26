@@ -11,7 +11,7 @@ type PinProps = {
   onBack?: () => void;
 };
 
-function Pin({ onNext }: PinProps) {
+function PinComponent({ onNext }: PinProps) {
   const [pin, setPin] = useState("");
   const [confirmPin, setConfirmPin] = useState("");
   const [showPin, setShowPin] = useState(false);
@@ -120,4 +120,6 @@ function Pin({ onNext }: PinProps) {
   );
 }
 
-export default observer(Pin);
+const Pin = observer(PinComponent);
+
+export default Pin;

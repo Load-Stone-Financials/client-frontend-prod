@@ -10,22 +10,17 @@ type OtpProps = {
   onBack?: () => void;
 };
 
-function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
+function OtpComponent({ phoneNumber, onNext, onBack }: OtpProps) {
   const [otp, setOtp] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [resendTimer, setResendTimer] = useState(60);
-  const [canResend, setCanResend] = useState(false);
+  const canResend = resendTimer <= 0;
 
   useEffect(() => {
-    if (resendTimer <= 0) {
-      if (!canResend) {
-        setCanResend(true);
-      }
-      return;
-    }
+    if (resendTimer <= 0) return;
     const t = setTimeout(() => setResendTimer((s) => s - 1), 1000);
     return () => clearTimeout(t);
-  }, [resendTimer, canResend]);
+  }, [resendTimer]);
 
   const handleVerify = async () => {
     if (otp.length !== 6) {
@@ -59,7 +54,6 @@ function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
     setSubmitting(false);
     if (result?.success) {
       setResendTimer(60);
-      setCanResend(false);
     }
   };
 
@@ -130,4 +124,6 @@ function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
   );
 }
 
-export default observer(Otp);
+const Otp = observer(OtpComponent);
+
+export default Otp;
