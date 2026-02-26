@@ -55,6 +55,14 @@ export class ProfileStore {
     msg: "",
   };
 
+  notifySuccess(message: string) {
+    toast.success(message);
+  }
+
+  notifyError(message: string) {
+    toast.error(message);
+  }
+
   private logger!: BrowserLogger;
   private userProfile!: Profile;
 

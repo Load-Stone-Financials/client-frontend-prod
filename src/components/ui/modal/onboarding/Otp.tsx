@@ -2,8 +2,7 @@ import OTPInput from "react-otp-input";
 import Button from "../../Button";
 import { useEffect, useState } from "react";
 import { authStore } from "@/mobx_stores/RootStore";
-import { toast } from "react-hot-toast";
-import { runInAction } from "mobx";
+import { observer } from "mobx-react-lite";
 
 type OtpProps = {
   phoneNumber: string;
@@ -11,7 +10,7 @@ type OtpProps = {
   onBack?: () => void;
 };
 
-export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
+function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
   const [otp, setOtp] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [resendTimer, setResendTimer] = useState(60);
@@ -19,18 +18,18 @@ export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
 
   useEffect(() => {
     if (resendTimer <= 0) {
-      runInAction(() => {
+      if (!canResend) {
         setCanResend(true);
-      });
+      }
       return;
     }
     const t = setTimeout(() => setResendTimer((s) => s - 1), 1000);
     return () => clearTimeout(t);
-  }, [resendTimer]);
+  }, [resendTimer, canResend]);
 
   const handleVerify = async () => {
     if (otp.length !== 6) {
-      toast.error("Enter the 6-digit OTP");
+      authStore.notifyError("Enter the 6-digit OTP");
       return;
     }
 
@@ -43,12 +42,14 @@ export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
       if (uid) {
         await authStore.UpdateIsPhoneVerified(uid, true);
       }
-      toast.success("Phone verified. Proceeding to BVN validation.");
+      authStore.notifySuccess(
+        "Phone verified. Proceeding to BVN validation."
+      );
       onNext();
       return;
     }
 
-    toast.error("Unable to verify OTP. Please try again.");
+    authStore.notifyError("Unable to verify OTP. Please try again.");
   };
 
   const handleResend = async () => {
@@ -57,11 +58,8 @@ export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
     const result = await authStore.resendSignupPhoneOtp(phoneNumber);
     setSubmitting(false);
     if (result?.success) {
-      toast.success("OTP resent.");
       setResendTimer(60);
-      runInAction(() => {
-        setCanResend(false);
-      });
+      setCanResend(false);
     }
   };
 
@@ -131,3 +129,5 @@ export default function Otp({ phoneNumber, onNext, onBack }: OtpProps) {
     </div>
   );
 }
+
+export default observer(Otp);

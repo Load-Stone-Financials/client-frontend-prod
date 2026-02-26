@@ -4,14 +4,14 @@ import Button from "../../Button";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "../../input";
 import { useState } from "react";
-import { toast } from "react-hot-toast";
+import { observer } from "mobx-react-lite";
 
 type BvnProps = {
   onNext: () => void;
   onBack?: () => void;
 };
 
-export default function Bvn({ onNext, onBack }: BvnProps) {
+function Bvn({ onNext, onBack }: BvnProps) {
   const [bvn, setBvn] = useState("");
   const [nin, setNin] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -20,7 +20,7 @@ export default function Bvn({ onNext, onBack }: BvnProps) {
 
   const handleValidate = async () => {
     if (!validateLength(bvn) || !validateLength(nin)) {
-      toast.error("BVN and NIN must be 11 digits");
+      authStore.notifyError("BVN and NIN must be 11 digits");
       return;
     }
     setSubmitting(true);
@@ -29,7 +29,9 @@ export default function Bvn({ onNext, onBack }: BvnProps) {
 
     if (result && result.error === false) {
       await authStore.checkBvnLivenessStatus();
-      toast.success("BVN verified. Proceeding to create your PIN.");
+      authStore.notifySuccess(
+        "BVN verified. Proceeding to create your PIN."
+      );
       onNext();
       return;
     }
@@ -93,3 +95,5 @@ export default function Bvn({ onNext, onBack }: BvnProps) {
     </div>
   )
 }
+
+export default observer(Bvn);

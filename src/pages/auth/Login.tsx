@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
 import Button from "../../components/ui/Button";
 import { FormFieldText } from "@/components/ui/forms/FormFieldText";
 import type { LoginFormData } from "@/types/onboarding";
@@ -12,13 +11,14 @@ import { LogIn } from "@/utils/firebase/AuthFirestore";
 import { auth } from "@/firebase/Firebase";
 import { authStore } from "@/mobx_stores/RootStore";
 import SmallSpinner from "@/components/ui/SmallSpinner";
+import { observer } from "mobx-react-lite";
 
 interface LoginProps {
   onSwitchToSignup?: () => void;
   onClose?: () => void;
 }
 
-export default function Login({
+function LoginComponent({
   onSwitchToSignup,
   // control,
   onClose,
@@ -82,11 +82,11 @@ export default function Login({
         } else {
           setError(res.data.message || "Unable to login");
         }
-        toast.error(error || "Login failed");
+        authStore.notifyError(error || "Login failed");
         return;
       }
 
-      toast.success("Login successful");
+      authStore.notifySuccess("Login successful");
 
       // Small delay so the toast is visible
       setTimeout(async () => {
@@ -176,3 +176,7 @@ export default function Login({
     </>
   );
 }
+
+const Login = observer(LoginComponent);
+
+export default Login;

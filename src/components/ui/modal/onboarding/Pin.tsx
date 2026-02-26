@@ -4,14 +4,14 @@ import { useState } from "react";
 import { Input } from "../../input";
 import { Label } from "../../label";
 import { profileStore } from "@/mobx_stores/RootStore";
-    import { toast } from "react-hot-toast";
+import { observer } from "mobx-react-lite";
 
 type PinProps = {
   onNext: () => void;
   onBack?: () => void;
 };
 
-export default function Pin({ onNext }: PinProps) {
+function Pin({ onNext }: PinProps) {
   const [pin, setPin] = useState("");
   const [confirmPin, setConfirmPin] = useState("");
   const [showPin, setShowPin] = useState(false);
@@ -45,7 +45,7 @@ export default function Pin({ onNext }: PinProps) {
   const handleSubmit = async () => {
     if (!canSubmit) {
       if (isPinComplete && !pinMatch) {
-        toast.error("PINs do not match.");
+        setError("PINs do not match.");
       }
       return;
     }
@@ -54,7 +54,6 @@ export default function Pin({ onNext }: PinProps) {
       true
     );
     if (!result.error) {
-      toast.success("Transaction PIN created successfully.");
       onNext();
     }
   };
@@ -120,3 +119,5 @@ export default function Pin({ onNext }: PinProps) {
     </div>
   );
 }
+
+export default observer(Pin);

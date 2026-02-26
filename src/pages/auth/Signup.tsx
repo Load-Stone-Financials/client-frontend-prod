@@ -16,7 +16,7 @@ import Bvn from "@/components/ui/modal/onboarding/Bvn";
 import Pin from "@/components/ui/modal/onboarding/Pin";
 import { authStore } from "@/mobx_stores/RootStore";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
+import { observer } from "mobx-react-lite";
 
 function getInitialStepIndex(initialStep: SignupStep | undefined): number {
   if (!initialStep) return 0;
@@ -24,7 +24,7 @@ function getInitialStepIndex(initialStep: SignupStep | undefined): number {
   return index >= 0 ? index : 0;
 }
 
-export default function Signup({
+function Signup({
   onClose,
   onSwitchToLogin,
   initialStep,
@@ -84,10 +84,11 @@ export default function Signup({
       setSubmitting(false);
       if (authStore.error) {
         setError(authStore.error);
-        toast.error(authStore.error);
         return;
       }
-      toast.success("Account created. Please check your email to verify.");
+      authStore.notifySuccess(
+        "Account created. Please check your email to verify."
+      );
       next();
       return;
     }
@@ -156,7 +157,9 @@ export default function Signup({
           {step === "pinSetup" && (
             <Pin
               onNext={() => {
-                toast.success("Account setup complete! Redirecting to dashboard.");
+                authStore.notifySuccess(
+                  "Account setup complete! Redirecting to dashboard."
+                );
                 onClose();
                 navigate("/dashboard/", { replace: true });
               }}
@@ -169,3 +172,5 @@ export default function Signup({
     </>
   );
 }
+
+export default observer(Signup);

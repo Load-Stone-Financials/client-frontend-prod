@@ -4,7 +4,7 @@ import Button from "../../Button";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import { observer } from "mobx-react-lite";
 
 type PhoneNoProps = {
   onNext: (phoneNumber: string) => void;
@@ -12,7 +12,7 @@ type PhoneNoProps = {
   initialPhoneNumber?: string;
 };
 
-export default function PhoneNo({
+function PhoneNoComponent({
   onNext,
   onBack,
   initialPhoneNumber = "",
@@ -29,15 +29,18 @@ export default function PhoneNo({
     return () => clearTimeout(t);
   }, [resendTimer]);
 
-  const validatePhone = (value: string) => value.startsWith("+") && value.length >= 10;
+  const validatePhone = (value: string) =>
+    value.startsWith("+") && value.length >= 10;
 
   const handleProceed = async () => {
     if (!phone) {
-      toast.error("Please enter your phone number");
+      authStore.notifyError("Please enter your phone number");
       return;
     }
     if (!validatePhone(phone)) {
-      toast.error("Please enter a valid phone number (include country code)");
+      authStore.notifyError(
+        "Please enter a valid phone number (include country code)"
+      );
       return;
     }
 
@@ -46,42 +49,28 @@ export default function PhoneNo({
     setSubmitting(false);
 
     if (result?.success) {
-      toast.success("OTP sent. Check your phone and proceed to the next step.");
       onNext(phone);
-      return;
-    }
-    toast.error("Could not send OTP. Please try again.");
-
-    if (result?.statusCode === 400) {
-      const msg =
-        result?.message ||
-        "This phone number is already registered. Please use a different phone number.";
-      toast.error(msg);
-      return;
     }
   };
 
   const handleResend = async () => {
     if (!canResend || submitting) return;
     if (!phone || !validatePhone(phone)) {
-      toast.error("Enter a valid phone number to resend OTP");
+      authStore.notifyError("Enter a valid phone number to resend OTP");
       return;
     }
-
     setSubmitting(true);
-    const result = await authStore.resendSignupPhoneOtp(phone);
+    await authStore.resendSignupPhoneOtp(phone);
     setSubmitting(false);
-
-    if (result?.success) {
-      toast.success("OTP resent.");
-      setResendTimer(60);
-    }
   };
 
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col items-center mb-6 md:mt-12">
-        <img src={`${BaseDirectories.ICONS_DIR}/mail2.png`} alt="Email verified" />
+        <img
+          src={`${BaseDirectories.ICONS_DIR}/mail2.png`}
+          alt="Email verified"
+        />
         <small className="text-gray-500 text-md">
           Email verification successful
         </small>
@@ -134,3 +123,7 @@ export default function PhoneNo({
     </div>
   );
 }
+
+const PhoneNo = observer(PhoneNoComponent);
+
+export default PhoneNo;
