@@ -24,6 +24,8 @@ import GuarantorDetails from "@/components/dashboard/guarantor/GuarantorDetails"
 import AddGuarantorForm from "@/components/dashboard/guarantor/AddGuarantorForm";
 import NotFound from "@/pages/NotFound";
 import VerifyEmailSuccessful from "@/pages/auth/VerifyEmailSuccessful";
+import PrivateRoute from "@/components/_shared/PrivateRoute";
+import { authStore } from "@/mobx_stores/RootStore";
 
 export default function MainRoutes() {
   AOS.init();
@@ -47,23 +49,21 @@ export default function MainRoutes() {
         <Route path="/T&C" element={<TermsandCondition />} />
         <Route path="/news" element={<BlogMain />} />
 
-        {/* TO BE PROTECTED  */}
-        <Route path="dashboard/" element={<Dashboard />}>
-          {/* <Route
-            path="overview"
-            element={<div>Dashboard Page - To be implemented</div>}
-          /> */}
-          <Route index element={<Overview />} />
+        {/* Protected dashboard routes */}
+        <Route element={<PrivateRoute activeUser={authStore.isActiveUser} />}>
+          <Route path="dashboard/" element={<Dashboard />}>
+            <Route index element={<Overview />} />
 
-          <Route path="loans" element={<Loans />} />
-          <Route path="guarantors" element={<Guarantors />} />
-           <Route path="guarantors/:id" element={<GuarantorDetails />} />
-           <Route path="guarantors/add" element={<AddGuarantorForm />} />
-          <Route path="invest" element={<Invest />} />
-          <Route path="wallet" element={<Wallet />} />
+            <Route path="loans" element={<Loans />} />
+            <Route path="guarantors" element={<Guarantors />} />
+            <Route path="guarantors/:id" element={<GuarantorDetails />} />
+            <Route path="guarantors/add" element={<AddGuarantorForm />} />
+            <Route path="invest" element={<Invest />} />
+            <Route path="wallet" element={<Wallet />} />
 
-          <Route path="settings" element={<Settings />} />
-           <Route path="*" element={<NotFound />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </Route>
       </Routes>
     </>
