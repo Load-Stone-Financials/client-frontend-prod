@@ -8,6 +8,7 @@ import Modal from "../ui/modal/Modal";
 import Login from "../../pages/auth/Login";
 import Signup from "../../pages/auth/Signup";
 import type { SignupStep } from "@/types/onboarding";
+import { SIGNUP_FLOW } from "@/types/onboarding";
 
 const ONBOARDING_STEP_PARAM = "step";
 
@@ -32,12 +33,19 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    const step = searchParams.get(ONBOARDING_STEP_PARAM);
-    if (step === "phoneVerification") {
+    const rawStep = searchParams.get(ONBOARDING_STEP_PARAM);
+    const step = rawStep as SignupStep | null;
+
+    if (!step || !SIGNUP_FLOW.includes(step)) return;
+
+    // Defer state updates to avoid synchronous setState warning inside effect
+    const id = window.setTimeout(() => {
       setIsSignupModalOpen(true);
-      setInitialSignupStep("phoneVerification");
+      setInitialSignupStep(step);
       setSearchParams({}, { replace: true });
-    }
+    }, 0);
+
+    return () => window.clearTimeout(id);
   }, [searchParams, setSearchParams]);
 
   const handleCloseSignup = () => {
