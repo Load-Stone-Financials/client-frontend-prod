@@ -1,27 +1,35 @@
-import { mdiCircleSmall, mdiMinus } from "@mdi/js";
+import { mdiCircleSmall, mdiMinus, mdiPlus   } from "@mdi/js";
 import Icon from "@mdi/react";
 import BaseDirectories from "../../baseDir/baseDirectories";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const cards = [
   {
     id: "01",
     title: "Operating capital financing",
-    description: "Secure essential working capital today and start expanding your business. Apply now to get started.",
+    description:
+      "Secure essential working capital today and start expanding your business. Apply now to get started.",
   },
   {
     id: "02",
     title: "Local Purchase Order Financing",
-    description: "Secure essential working capital today and start expanding your business. Apply now to get started.",
+    description:
+      "Secure essential working capital today and start expanding your business. Apply now to get started.",
   },
-    {
-    id: 3,
+  {
+    id: "03",
     title: "Invoice Discount Finance",
-    description: "Secure essential working capital today and start expanding your business. Apply now to get started.",
+    description:
+      "Secure essential working capital today and start expanding your business. Apply now to get started.",
   },
-
 ];
 export default function WhatWeDo() {
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+
+  const handleCardClick = (cardId: string) => {
+    setActiveCardId((prev) => (prev === cardId ? null : cardId));
+  };
   return (
     <section className="md:mt-10 mx-auto">
       <div className="grid md:grid-cols-2 grid-rows-1 px-2 md:mb-36 items-start justify-center mx-4 text-center gap-10 md:mx-20 my-8">
@@ -65,7 +73,7 @@ export default function WhatWeDo() {
         </h2>
       </div>
       <div
-        className="h-[350px] -mb-10"
+        className="h-[350px] flex items-end"
         style={{
           backgroundImage: "url('/images/landing/bg2.png')",
           backgroundSize: "center",
@@ -73,30 +81,45 @@ export default function WhatWeDo() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="grid md:grid-cols-3 grid-rows-1 px-2 md:mb-36 items-start justify-center mx-4 text-center gap-10 md:mx-20 my-8 pt-10">
-          <div className="flex flex-col justify-center bg-brand-white p-4 rounded-xl shadow-md items-start gap-4 w-[400px]">
-            <div className="flex items-center gap-2 text-start">
-              <span className="text-xs font-bold bg-brand-purple text-gray-300 p-2 rounded-full">
-                {cards[0].id}
-              </span>{" "}
-              <h2 className="text-xl font-medium font-inter mx-auto mb-2">
-                {cards[0].title}
-              </h2>
-              <Icon className="ml-2" path={mdiMinus} size={1} />{" "}
-            </div>
-
-            <p className="max-w-xs text-start">
-              {cards[0].description}
-            </p>
-            <span
-              className="flex bg-gray-100 px-4 py-2 rounded-full text-brand-purple mt-4 cursor-pointer"
-              onClick={() => {
-                toast.success("Coming Soon");
-              }}
+        <div className="grid md:grid-cols-3 grid-rows-1 px-2 md:mb-6 items-start justify-center mx-4 text-center gap-10 md:mx-20 w-full pb-6">
+          {cards.map((card) => (
+            <div
+              key={card.id}
+              onClick={() => handleCardClick(card.id)}
+              className="cursor-pointer "
             >
-              <span className="">Learn More </span>{" "}
-            </span>
-          </div>
+              <div className="flex flex-col justify-center hover:bg-gray-100 transition-all duration-300 hover:shadow-md bg-brand-white p-4 rounded-xl shadow-md items-start gap-4 w-[400px]">
+                <div className="flex items-center gap-2 text-start">
+                  <span className="text-xs font-bold bg-brand-purple text-gray-300 p-2 rounded-full">
+                    {card.id}
+                  </span>
+                  <h2 className="text-xl font-medium font-inter mx-auto mb-2">
+                    {card.title}
+                  </h2>
+                  <Icon
+                    className="ml-2"
+                    path={activeCardId === card.id ? mdiMinus : mdiPlus}
+                    size={1}
+                  />
+                </div>
+
+                {activeCardId === card.id && (
+                  <>
+                    <p className="max-w-xs text-start">{card.description}</p>
+                    <span
+                      className="flex bg-gray-100 px-4 py-2 rounded-full text-brand-purple mt-4 cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toast.success("Coming Soon");
+                      }}
+                    >
+                      <span className="">Learn More </span>
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
