@@ -5,17 +5,24 @@ import BaseDirectories from "../../baseDir/baseDirectories";
 export default function WhatWeDo() {
   return (
     <section className="md:mt-10 mx-auto">
-      <div className="text-center">
-        <div className="text-md text-brand-purple flex justify-center items-center font-bold mb-4">
-          {" "}
-          <Icon path={mdiCircleSmall} size={3} className="" />{" "}
-          <span className="uppercase -ml-4">What We Do</span>
-        </div>
-        <h2 className="text-6xl font-bold mb-8 md:mx-2 mx-4">
-          Transforming Business for MSMEs
-        </h2>
-      </div>
       <div className="grid md:grid-cols-2 grid-rows-1 px-2 md:mb-36 items-start mx-4 text-center justify-between h-full gap-8  md:mx-20 my-12">
+        <div className="">
+          <img
+            src={`${BaseDirectories.IMAGES_DIR}/landing/wwd4.png`}
+            alt="Hero"
+            className="md:w-3/5 mx-auto h-auto"
+          />
+        </div>
+
+        <div className="text-start">
+         <div className="">
+          <div className="text-md text-brand-purple flex items-center font-bold mb-4">
+            {" "}
+            <Icon path={mdiCircleSmall} size={3} className="" />{" "}
+            <span className="uppercase -ml-4">What We Do</span>
+          </div>
+
+        </div>
         <div className="flex flex-col justify-self-start font-inter items-start gap-6 md:mt-14">
           <p className="max-w-lg text-start font-medium leading-10 text-2xl ">
             We make access to B2B financing simple and easy. No collaterals or
@@ -35,12 +42,6 @@ export default function WhatWeDo() {
             </div>
           </div>
         </div>
-        <div className="">
-          <img
-            src={`${BaseDirectories.IMAGES_DIR}/landing/wwd.png`}
-            alt="Hero"
-            className="md:w-3/5 mx-auto h-auto"
-          />
         </div>
       </div>
     </section>

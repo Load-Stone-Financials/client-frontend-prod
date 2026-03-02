@@ -68,26 +68,25 @@ export default function Account({
             onChange={() => {}}
             inputClassName="!w-full text-white placeholder:text-white"
             className="!w-full"
-            style={{ width: '100%' }}
-            inputStyle={{ width: '100%' }}
+            style={{ width: "100%" }}
+            inputStyle={{ width: "100%" }}
           />
           <small className="text-gray-500 mt-0">
             Your phone number must be a valid phone number
           </small>
         </div>
-
+      </div>{" "}
+      <div className="flex items-center gap-3 text-gray-500 mb-2">
+        <Checkbox id="terms" required />
+        <Label htmlFor="terms">Accept terms and conditions</Label>
       </div>
-      <Button 
+      <Button
         content="Next"
         type="submit"
         // onClick={onNext}
         // disabled={loading}
         classes="primary-btn btn-md mb-2"
-      />
-      <div className="flex items-center gap-3 text-gray-500">
-        <Checkbox id="terms" required />
-        <Label htmlFor="terms">Accept terms and conditions</Label>
-      </div>{" "}
+      />{" "}
       <div className="text-sm text-center mt-6 text-brand-white">
         Already have an account?{" "}
         <button

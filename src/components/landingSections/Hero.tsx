@@ -12,7 +12,7 @@ export default function Hero() {
       }}
     >
       <div
-        className="grid min-h-screen md:grid-cols-2 grid-rows-1 px-2  items-center py-20 text-center justify-between h-full gap-2  md:mx-20"
+        className="grid md:grid-cols-2 grid-rows-1 pl-2  items-center pt-20 text-center justify-between h-full gap-2"
         data-aos="fade-right"
         data-aos-offset="70"
         data-aos-delay="0"
@@ -21,13 +21,13 @@ export default function Hero() {
         data-aos-mirror="true"
         data-aos-once="true"
       >
-        <div className="text-white text-start flex flex-col mt-20 gap-6 ">
-          <h1 className="text-5xl font-bold mb-4 md:max-w-lg">
-            Driving Financial Inclusion for MSMEs
-          </h1>
+        <div className="text-white text-start flex flex-col mt-20 gap-6 mb-6 md:ml-36 ">
+          <span className="text-6xl leading-wider mb-4 md:max-w-2xl">
+            Empowering <br/> MSMEs Through Financial Inclusion
+          </span>
           <p className="text-xl md:max-w-md">
-            Get the financial solution you need to purchase inventory, fulfill
-            large orders, and grow your business.
+            Access the financing you need to stock inventory, meet large orders,
+            and expand your business.
           </p>
           <div className="mt-8">
             <Button
@@ -40,7 +40,7 @@ export default function Hero() {
           <img
             src={`${BaseDirectories.IMAGES_DIR}/landing/hero.png`}
             alt="Hero"
-            className="max-w-full md:mt-26"
+            className="max-w-full md:mt-26 mb-0"
           />
         </div>
       </div>
