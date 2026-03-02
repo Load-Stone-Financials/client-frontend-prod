@@ -27,11 +27,7 @@
     "axios": "^1.13.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-<<<<<<< HEAD
-    "firebase": "^11.10.0",
-=======
     "firebase": "^12.9.0",
->>>>>>> b2872ff233310656c502e3297a22ab21738b9d80
     "framer-motion": "^12.25.0",
     "lucide-react": "^0.555.0",
     "mobx": "^6.15.0",
