@@ -48,44 +48,100 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div id="faq" className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 py-16 px-6">
-      {/* left */}
-      <div className="md:col-span-1 text-start" data-aos="fade-up" data-aos-duration="1000">
-        <h2 className="text-4xl font-bold text-purple-700 leading-tight">
+    <div
+      id="faq"
+      className="w-full max-w-6xl mx-auto flex flex-col gap-4 py-16 px-6"
+    >
+      <div
+        className="md:col-span-1 text-center"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        <h2 className="md:text-5xl font-bold text-purple-700 leading-tight">
           Frequently Ask Questions
         </h2>
-        <div className="mt-14 text-sm text-gray-600">
-          <p>Have more questions?</p>
-          <button className="mt-2 inline-flex items-center gap-1 text-purple-600 font-medium hover:underline">
-            Chat with us <ChevronRight className="border-2 rounded-full border-brand-purple-light" size={16} />
-          </button>
-        </div>
       </div>
 
-      {/* rigght faq list */}
-      <div className="md:col-span-2 space-y-4" data-aos="fade-left" data-aos-duration="1000">
+      <div
+        className="md:col-span-2 space-y-4"
+        data-aos="fade-left"
+        data-aos-duration="1000"
+      >
         {faqs.map((item, index) => (
-          <div key={index} className="border-b border-gray-300 pb-3">
+          <div
+            key={index}
+            className="bg-purple-100 rounded-3xl px-6 py-4 shadow-sm"
+          >
             <button
-              className="w-full font-bold flex justify-between items-center text-left text-gray-800"
+              className="w-full font-semibold flex justify-between items-center text-left text-gray-900"
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
             >
-              {item.q}
+              <span>{item.q}</span>
               <ChevronDown
-                className={`transition-transform ${
+                className={`text-purple-700 transition-transform ${
                   openIndex === index ? "rotate-180" : "rotate-0"
                 }`}
                 size={18}
               />
             </button>
             {openIndex === index && (
-              <p className="mt-3 text-start text-sm text-gray-600 leading-relaxed">
+              <p className="mt-3 text-start text-sm text-gray-700 leading-relaxed">
                 {item.a}
               </p>
             )}
           </div>
         ))}
+        <div className="mt-14 text-sm text-gray-600">
+          <p>Have more questions?</p>
+          <button className="mt-2 inline-flex items-center gap-1 text-purple-600 font-medium hover:underline">
+            Chat with us{" "}
+            <ChevronRight
+              className="border-2 rounded-full border-brand-purple-light"
+              size={16}
+            />
+          </button>
+        </div>{" "}
       </div>
     </div>
+
+    // <div id="faq" className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 py-16 px-6">
+    //   {/* left */}
+    //   <div className="md:col-span-1 text-start" data-aos="fade-up" data-aos-duration="1000">
+    //     <h2 className="text-4xl font-bold text-purple-700 leading-tight">
+    //       Frequently Ask Questions
+    //     </h2>
+    //     <div className="mt-14 text-sm text-gray-600">
+    //       <p>Have more questions?</p>
+    //       <button className="mt-2 inline-flex items-center gap-1 text-purple-600 font-medium hover:underline">
+    //         Chat with us <ChevronRight className="border-2 rounded-full border-brand-purple-light" size={16} />
+    //       </button>
+    //     </div>
+    //   </div>
+
+    //   {/* rigght faq list */}
+    //   <div className="md:col-span-2 space-y-4" data-aos="fade-left" data-aos-duration="1000">
+    //     {faqs.map((item, index) => (
+    //       <div key={index} className="border-b border-gray-300 pb-3">
+    //         <button
+    //           className="w-full font-bold flex justify-between items-center text-left text-gray-800"
+    //           onClick={() => setOpenIndex(openIndex === index ? null : index)}
+    //         >
+    //           {item.q}
+    //           <ChevronDown
+    //             className={`transition-transform ${
+    //               openIndex === index ? "rotate-180" : "rotate-0"
+    //             }`}
+    //             size={18}
+    //           />
+    //         </button>
+    //         {openIndex === index && (
+    //           <p className="mt-3 text-start text-sm text-gray-600 leading-relaxed">
+    //             {item.a}
+    //           </p>
+    //         )}
+    //       </div>
+    //     ))}
+    //   </div>
+    // </div>
   );
 }
