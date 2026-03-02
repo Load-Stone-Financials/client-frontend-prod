@@ -76,7 +76,7 @@ export default function FAQSection() {
               className="w-full font-semibold flex justify-between items-center text-left text-gray-900"
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
             >
-              <span>{item.q}</span>
+              <span>{item.q}</span>-------
               <ChevronDown
                 className={`text-purple-700 transition-transform ${
                   openIndex === index ? "rotate-180" : "rotate-0"
