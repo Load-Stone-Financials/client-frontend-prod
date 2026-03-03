@@ -14,7 +14,7 @@ export default function SavingsInvestment() {
       />
       <section className="">
         <div
-          className=""
+          className="flex"
           style={{
             backgroundImage: "url('/images/landing/herobg3.png')",
             backgroundSize: "cover",
@@ -39,6 +39,13 @@ export default function SavingsInvestment() {
                 classes="secondary-btn btn-sm !rounded-md"
               />
             </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <img
+              src={`${BaseDirectories.IMAGES_DIR}/landing/savings/main.png`}
+              alt="Hero"
+              className="w-full rounded-2xl"
+            />
           </div>
           <div />
         </div>
