@@ -2,7 +2,6 @@ import {
   mdiAccountDetails,
   mdiAccountGroup,
   mdiCogOutline,
-  mdiCreditCard,
   mdiFinance,
   mdiFrequentlyAskedQuestions,
   mdiHandCoin,
@@ -50,13 +49,13 @@ export const productLinks = [
     description: "Save with ARM and Lend with LoadStone",
     comingSoon: false,
   },
-  {
-    icon: mdiCreditCard,
-    text: "Payments",
-    url: "/payments",
-    description: "Free Transfers and Bills Payment",
-    comingSoon: false,
-  },
+  // {
+  //   icon: mdiCreditCard,
+  //   text: "Payments",
+  //   url: "/payments",
+  //   description: "Free Transfers and Bills Payment",
+  //   comingSoon: false,
+  // },
 ];
 
 export const supportLinks = [

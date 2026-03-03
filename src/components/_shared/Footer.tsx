@@ -1,13 +1,13 @@
 import BaseDirectories from "../../baseDir/baseDirectories";
 import { FaLinkedin, FaInstagram, FaTwitter, FaFacebook } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Button from "../ui/Button";
+// import Button from "../ui/Button";
 
 export default function Footer() {
   return (
     <footer className="lg:h-[797px text-white bottom-0 left-0">
       {/* Newsletter Section */}
-      <div className="bg-brand-purple-light  w-full lg:h-[248px] py-10 px-4 text-white text-center">
+      {/* <div className="bg-brand-purple-light  w-full lg:h-[248px] py-10 px-4 text-white text-center">
         <div className="lg:h-[200px} max-w-[1250px] mx-auto pt-37px">
           <h2 className="text-2xl  font-semibold fw-600 text-[40px] mb-2">
             Subscribe to our Newsletter
@@ -38,7 +38,7 @@ export default function Footer() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
       {/* Main Footer Content */}
       <div className="bg-[#612FCC] w-full py-10 px-4  fw-500 text-[20px]">
         <div className="max-w lg:max-w-[1250px] mx-auto">
@@ -47,7 +47,7 @@ export default function Footer() {
             <div className="w-1/5 min-w-[200px]">
               <div className="mb-4 mx-6">
                 <img
-                  src={`${BaseDirectories.ICONS_DIR}/brand.png`}
+                  src={`${BaseDirectories.LOGOS_DIR}/brand3.png`}
                   alt="Loadstone Logo"
                   className=" size-40"
                 />
