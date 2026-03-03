@@ -1,4 +1,4 @@
-import { mdiCircleSmall, mdiMinus, mdiPlus   } from "@mdi/js";
+import { mdiCircleSmall, mdiMinus, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import BaseDirectories from "../../baseDir/baseDirectories";
 import toast from "react-hot-toast";
@@ -107,13 +107,13 @@ export default function WhatWeDo() {
                   <>
                     <p className="max-w-xs text-start">{card.description}</p>
                     <span
-                      className="flex bg-gray-100 px-4 py-2 rounded-full text-brand-purple mt-4 cursor-pointer"
+                      className="flex text-xs bg-gray-200 p-2 rounded-full text-brand-purple mt-4 cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
                         toast.success("Coming Soon");
                       }}
                     >
-                      <span className="">Learn More </span>
+                      Learn More
                     </span>
                   </>
                 )}
