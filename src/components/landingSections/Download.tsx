@@ -12,7 +12,9 @@ export default function Download() {
           />
         </div>
         <div className="max-w-3xl mx-auto flex flex-col justify-center items-start">
-          <h2 className="text-6xl font-bold mb-2 max-w-xl text-start">Download Our Mobile App!</h2>
+          <h2 className="text-6xl font-bold mb-2 max-w-xl text-start">
+            Download Our Mobile App!
+          </h2>
           <p className="text-start text-lg  max-w-[320px]">
             Create an account to access our tailored financing solutions in no
             time.

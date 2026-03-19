@@ -81,7 +81,7 @@ export default function WhatWeDo() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="grid md:grid-cols-3 grid-rows-1 px-2 md:mb-6 items-start justify-center mx-4 text-center gap-10 md:mx-20 w-full pb-6">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-rows-1 px-2 md:mb-6 items-start justify-center mx-4 text-center gap-10 md:mx-20 w-full pb-6">
           {cards.map((card) => (
             <div
               key={card.id}
