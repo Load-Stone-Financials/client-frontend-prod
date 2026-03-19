@@ -4,7 +4,7 @@ import Button from "../ui/Button";
 export default function Download() {
   return (
     <div>
-      <div className="bg-brand-purple-light flex w-full text-white text-center">
+      <div className="bg-brand-purple-light flex md:flex-row flex-col w-full text-white text-center">
         <div className="max-w-xl mx-auto flex justify-end">
           <img
             src={`${BaseDirectories.IMAGES_DIR}/landing/business/iphone.png`}
@@ -20,11 +20,11 @@ export default function Download() {
             time.
           </p>
           <div className="flex justify-center items-center gap-2 flex-wrap">
-            <img
+            <img className="cursor-pointer"
               src={`${BaseDirectories.IMAGES_DIR}/landing/business/ios.png`}
               alt=""
             />
-            <img
+            <img className="cursor-pointer"
               src={`${BaseDirectories.IMAGES_DIR}/landing/business/andriod.png`}
               alt=""
             />

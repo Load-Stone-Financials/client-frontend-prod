@@ -50,7 +50,7 @@ export default function Business() {
         >
           {" "}
           <div
-            className="px-2 flex pt-10 text-center justify-between gap-2 md:mx-20"
+            className="px-2 flex md:flex-row flex-col pt-10 text-center justify-between gap-2 md:mx-20"
             data-aos="fade-right"
             data-aos-offset="70"
             data-aos-delay="0"
@@ -88,7 +88,7 @@ export default function Business() {
           <h2 className="text-center text-5xl font-semibold max-w-4xl mx-auto mt-6">
             Secure instant funding for your business with ease
           </h2>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 px-2 md:mb-6 items-start justify-center text-center w-full pb-6 mt-20 mx-auto">
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 px-2 md:mb-6 items-start justify-center text-center w-full pb-6 mt-20 mx-auto">
             {cards.map((card) => (
               <div
                 key={card.id}
@@ -153,7 +153,7 @@ export default function Business() {
         data-aos-mirror="true"
         data-aos-once="true"
       >
-        <div className="flex justify-between items-center gap-6">
+        <div className="flex md:flex-row flex-col justify-between items-center gap-6">
           <div className="flex justify-start items-center gap-2 mb-2">
             <div className="before:content-[''] before:block before:w-2 before:h-32 before:bg-brand-purple before:mx-auto before:my-4" />
             <div className="text-start">
