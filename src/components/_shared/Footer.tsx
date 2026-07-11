@@ -119,8 +119,16 @@ RD., Ibadan, Ido, Oyo State</h4>
                 <h4 className="pt-5"> <Link to="/T&C" className="hover:text-[#9668FF] transition">
                   Terms and Conditions
                 </Link></h4>
-                <h4 className="pt-5">Privacy Policy</h4>
-                <h4 className=" pt-5">Cookies</h4>
+                <h4 className="pt-5">
+                  <Link to="/privacy-policy" className="hover:text-[#9668FF] transition">
+                    Privacy Policy
+                  </Link>
+                </h4>
+                <h4 className=" pt-5">
+                  <Link to="/cookie-policy" className="hover:text-[#9668FF] transition">
+                    Cookies
+                  </Link>
+                </h4>
 
               </div>
             </div>

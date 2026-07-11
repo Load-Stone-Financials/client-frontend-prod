@@ -11,6 +11,8 @@ import SavingsInvestment from "../pages/landing/SavingsInvestment";
 import ContactUs from "../components/landingSections/ContactUs";
 import Blog from "../pages/landing/Blog";
 import TermsandCondition from "../components/landingSections/TermsandCondition";
+import PrivacyPolicy from "../components/landingSections/PrivacyPolicy";
+import CookiePolicy from "../components/landingSections/CookiePolicy";
 import BlogMain from "../pages/landing/BlogMain";
 import Dashboard from "@/components/_shared/Dashboard";
 import Overview from "@/pages/dashboard/Overview";
@@ -47,6 +49,8 @@ export default function MainRoutes() {
 
         <Route path="/faq" element={<FAQ />} />
         <Route path="/T&C" element={<TermsandCondition />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/news" element={<BlogMain />} />
 
         {/* Protected dashboard routes */}
