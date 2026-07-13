@@ -132,14 +132,20 @@ export default function Footer() {
               {/* Legal */}
               <div>
                 <h3 className="fw-700 mt-10 md:mt-0 font-semibold">LEGAL</h3>
+                <h4 className="pt-5"> <Link to="/T&C" className="hover:text-[#9668FF] transition">
+                  Terms and Conditions
+                </Link></h4>
                 <h4 className="pt-5">
-                  {" "}
-                  <Link to="/T&C" className="hover:text-[#9668FF] transition">
-                    Terms and Conditions
+                  <Link to="/privacy-policy" className="hover:text-[#9668FF] transition">
+                    Privacy Policy
                   </Link>
                 </h4>
-                <h4 className="pt-5">Privacy Policy</h4>
-                <h4 className=" pt-5">Cookies</h4>
+                <h4 className=" pt-5">
+                  <Link to="/cookie-policy" className="hover:text-[#9668FF] transition">
+                    Cookies
+                  </Link>
+                </h4>
+
               </div>
             </div>
           </div>
