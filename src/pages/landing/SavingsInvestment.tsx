@@ -1,8 +1,8 @@
 import Button from "@/components/ui/Button";
 import LandingLayout from "../../components/_shared/LandingLayout";
 import BaseDirectories from "@/baseDir/baseDirectories";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { Input } from "@/components/ui/input";
 
 export default function SavingsInvestment() {
   return (
@@ -14,7 +14,7 @@ export default function SavingsInvestment() {
       />
       <section className="">
         <div
-          className=""
+          className="flex"
           style={{
             backgroundImage: "url('/images/landing/herobg3.png')",
             backgroundSize: "cover",
@@ -27,15 +27,25 @@ export default function SavingsInvestment() {
               SAVING & INVESTMENT
             </h3>
             <h1 className="text-5xl font-bold mb-4 max-w-4xl">
-              Achieve your business dream with a saving plan
+              Savings That Power Your Business Dreams
             </h1>
             <p className="text-xl md:max-w-md">
-              No long wait, no need for collateral, get up to N10M loan within
-              six hours
+              Our savings plans are designed to help you set aside funds
+              strategically so you can achieve your business goals.
             </p>
             <div className="mt-8">
-              <Button content="Start Saving" classes="secondary-btn btn-sm " />
+              <Button
+                content="Start Saving"
+                classes="secondary-btn btn-sm !rounded-md"
+              />
             </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <img
+              src={`${BaseDirectories.IMAGES_DIR}/landing/savings/main.png`}
+              alt="Hero"
+              className="w-full rounded-2xl"
+            />
           </div>
           <div />
         </div>
@@ -49,127 +59,50 @@ export default function SavingsInvestment() {
           <div className="grid md:grid-cols-2 grid-cols-1 justify-center items-center gap-4">
             <div className="bg-white max-w-md rounded-3xl">
               <img
-                src={`${BaseDirectories.IMAGES_DIR}/landing/Finance/img1.png`}
+                src={`${BaseDirectories.IMAGES_DIR}/landing/savings/img1.jpg`}
                 alt="Hero"
-                className="w-full "
+                className="w-full  rounded-2xl"
               />
-              <h2 className="max-w-sm mt-6 mb-4 md:mx-10 mx-2 text-start">
-                Flexible saving and withdrawal options
+              <h2 className="max-w-sm mt-6 mb-4 md:mx-10 mx-2 text-start font-bold text-2xl">
+                Diversify your investment portfolio
               </h2>
             </div>
             <div className="text-start">
               <p className="text-start text-xl mb-6 md:max-w-md">
-                Diversify your investment portfolio, Get your money working for
-                you and earn attractive returns on your investment
+                Diversifying your investments helps spread risk across multiple
+                opportunities, allowing you to grow your wealth more securely
+                and maximize potential returns.
               </p>
-              <div className="space-y-4">
-                {" "}
-                <div className="flex gap-2 items-center">
-                  {" "}
-                  <Input
-                    type="checkbox"
-                    id="subscribe"
-                    name="subscribe"
-                    value="newsletter"
-                    checked
-                    className="size-8 accent-[#EBF9F6] rounded text-yellow-400 focus:ring-red-400"
-                  />{" "}
-                  <Label htmlFor="subscribe">Cover operating expenses</Label>{" "}
-                </div>
-                <div className="flex gap-2 items-center">
-                  {" "}
-                  <Input
-                    type="checkbox"
-                    id="subscribe"
-                    name="subscribe"
-                    value="newsletter"
-                    checked
-                    className="size-8 accent-[#EBF9F6] rounded text-yellow-400 focus:ring-red-400"
-                  />{" "}
-                  <Label htmlFor="subscribe">
-                    Invest in growth opportunities.
-                  </Label>{" "}
-                </div>
-                <div className="flex gap-2 items-center">
-                  {" "}
-                  <Input
-                    type="checkbox"
-                    id="subscribe"
-                    name="subscribe"
-                    value="newsletter"
-                    checked
-                    className="size-8 accent-[#EBF9F6] rounded text-yellow-400 focus:ring-red-400"
-                  />{" "}
-                  <Label htmlFor="subscribe">Purchase inventory</Label>{" "}
-                </div>
-              </div>
 
               <Button
-                content="Invest Now"
+                content="Diversify Now"
                 classes="primary-btn btn-sm mt-4 rounded-sm!"
               />
             </div>
           </div>
           <div className="grid md:grid-cols-2 grid-cols-1 justify-center gap-4">
             <div className="bg-white max-w-md rounded-3xl">
-              <div className="w-full bg-brand-purple-light h-[343px] rounded-2xl" />
-              <h2 className="max-w-sm mt-6 mb-4 md:mx-10 mx-2 text-start">
+              <img
+                src={`${BaseDirectories.IMAGES_DIR}/landing/savings/Img3.png`}
+                alt="Hero"
+                className="w-full rounded-2xl"
+              />
+              <h2 className="max-w-sm mt-6 mb-4 md:mx-10 mx-2 text-start font-bold text-2xl">
                 Flexible saving and withdrawal options
               </h2>
             </div>
             <div className="text-start">
               <h1 className="font-bold text-4xl mb-4 md:max-w-lg">
-                Unlock the power of working capital.
+                Smart Savings, Stronger Business
               </h1>
               <p className="text-start text-xl mb-6 md:max-w-md">
-                Are you struggling to keep up with day-to-day expenses or
-                looking to expand your business? Our working capital solutions
-                provide the funds you need to do the following
+                By saving strategically, you can build the financial foundation
+                your business needs to grow, invest, and achieve long-term
+                success.
               </p>
-              <div className="space-y-4">
-                {" "}
-                <div className="flex gap-2 items-center">
-                  {" "}
-                  <Input
-                    type="checkbox"
-                    id="subscribe"
-                    name="subscribe"
-                    value="newsletter"
-                    checked
-                    className="size-8 accent-[#EBF9F6] rounded text-yellow-400 focus:ring-red-400"
-                  />{" "}
-                  <Label htmlFor="subscribe">Cover operating expenses</Label>{" "}
-                </div>
-                <div className="flex gap-2 items-center">
-                  {" "}
-                  <Input
-                    type="checkbox"
-                    id="subscribe"
-                    name="subscribe"
-                    value="newsletter"
-                    checked
-                    className="size-8 accent-[#EBF9F6] rounded text-yellow-400 focus:ring-red-400"
-                  />{" "}
-                  <Label htmlFor="subscribe">
-                    Invest in growth opportunities.
-                  </Label>{" "}
-                </div>
-                <div className="flex gap-2 items-center">
-                  {" "}
-                  <Input
-                    type="checkbox"
-                    id="subscribe"
-                    name="subscribe"
-                    value="newsletter"
-                    checked
-                    className="size-8 accent-[#EBF9F6] rounded text-yellow-400 focus:ring-red-400"
-                  />{" "}
-                  <Label htmlFor="subscribe">Purchase inventory</Label>{" "}
-                </div>
-              </div>
 
               <Button
-                content="Invest Now"
+                content="Save Now"
                 classes="primary-btn btn-sm mt-4 rounded-sm!"
               />
             </div>
@@ -177,24 +110,24 @@ export default function SavingsInvestment() {
           <div className="grid md:grid-cols-2 grid-cols-1 justify-center pb-10">
             <div className="bg-white max-w-md rounded-3xl">
               <img
-                src={`${BaseDirectories.IMAGES_DIR}/landing/Finance/img4.png`}
+                src={`${BaseDirectories.IMAGES_DIR}/landing/savings/img2.png`}
                 alt="Hero"
-                className="w-full "
+                className="w-full rounded-2xl"
               />
-              <h2 className="max-w-sm mt-6 mb-4 md:mx-10 mx-2 text-start">
+              <h2 className="max-w-sm mt-6 mb-4 md:mx-10 mx-2 text-start font-bold text-2xl">
                 Profitable returns From Investment
               </h2>
             </div>
             <div className="text-start">
               <h1 className="font-bold text-4xl mb-4 md:max-w-lg">
-                Earn returns by supporting a $5trn supply value chain.
+                Fuel the 5Tr Supply Chain, Reap attractive Returns
               </h1>
               <p className="text-start text-xl mb-6 md:max-w-md">
-                Are you struggling to keep up with day-to-day expenses or
-                looking to expand your business? Our working capital solutions
-                provide the funds you need to do the following
+                By supporting a $5 trillion supply value chain, you can earn
+                attractive returns while helping businesses access capital and
+                grow their operations.
               </p>
-              <div className="flex gap-2 items-center">
+              {/* <div className="flex gap-2 items-center">
                 {" "}
                 <Input
                   type="checkbox"
@@ -207,7 +140,7 @@ export default function SavingsInvestment() {
                 <Label htmlFor="subscribe">
                   Invest in growth opportunities.
                 </Label>{" "}
-              </div>
+              </div> */}
 
               <Button
                 content="Invest Now"

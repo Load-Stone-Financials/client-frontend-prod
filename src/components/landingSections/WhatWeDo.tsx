@@ -1,4 +1,4 @@
-import { mdiCircleSmall, mdiMinus, mdiPlus   } from "@mdi/js";
+import { mdiCircleSmall, mdiMinus, mdiPlus } from "@mdi/js";
 import Icon from "@mdi/react";
 import BaseDirectories from "../../baseDir/baseDirectories";
 import toast from "react-hot-toast";
@@ -81,7 +81,7 @@ export default function WhatWeDo() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="grid md:grid-cols-3 grid-rows-1 px-2 md:mb-6 items-start justify-center mx-4 text-center gap-10 md:mx-20 w-full pb-6">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-rows-1 px-2 md:mb-6 items-start justify-center mx-4 text-center gap-10 md:mx-20 w-full pb-6">
           {cards.map((card) => (
             <div
               key={card.id}
@@ -107,13 +107,13 @@ export default function WhatWeDo() {
                   <>
                     <p className="max-w-xs text-start">{card.description}</p>
                     <span
-                      className="flex bg-gray-100 px-4 py-2 rounded-full text-brand-purple mt-4 cursor-pointer"
+                      className="flex text-xs bg-gray-200 p-2 rounded-full text-brand-purple mt-4 cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
                         toast.success("Coming Soon");
                       }}
                     >
-                      <span className="">Learn More </span>
+                      Learn More
                     </span>
                   </>
                 )}
